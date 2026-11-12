@@ -1,0 +1,19 @@
+{
+  "name": "mchose-voice-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run prepare-core && npm run prepare-firmware && vite --host 127.0.0.1",
+    "prepare-core": "node scripts/prepare-core.mjs",
+    "prepare-firmware": "node scripts/fetch-firmware.mjs",
+    "build": "npm run prepare-core && npm run prepare-firmware && vite build --base=./",
+    "test": "node --test tests/*.test.mjs",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@ffmpeg/ffmpeg": "0.12.15",
+    "@ffmpeg/core": "0.12.10"
+  },
+  "devDependencies": {"vite": "6.4.1"}
+}

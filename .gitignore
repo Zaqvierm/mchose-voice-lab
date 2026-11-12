@@ -1,0 +1,14 @@
+node_modules/
+dist/
+public/ffmpeg/
+public/firmware/
+Memory.md
+.private/
+*.bin
+*.act
+*.aac
+*.wav
+*.mp3
+*.log
+__pycache__/
+.DS_Store
