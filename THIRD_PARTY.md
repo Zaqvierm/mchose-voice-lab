@@ -14,4 +14,6 @@ The website build retrieves unchanged official MCHOSE headset images from the UR
 
 Owner audio (including the test sound used during research), original voice recordings and private fixture images are not committed to Git. Visitors are responsible for the audio they provide.
 
+When the manufacturer's CDN is unavailable, the build may reuse a cached or previously published original from this project's website. The exact same SHA256 and size are required; no alternative version is silently substituted. An initial publication still requires at least one valid original source. Cache/mirror transport does not change vendor ownership.
+
 MCHOSE, Actions Technology, OpenAI Codex and other names identify relevant products or assistance, not endorsement. See [CONTRIBUTORS.md](CONTRIBUTORS.md).

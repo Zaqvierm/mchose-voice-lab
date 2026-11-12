@@ -20,6 +20,10 @@ jobs:
           node-version: "22"
           cache: npm
       - run: npm ci
+      - uses: actions/cache@v4
+        with:
+          path: public/firmware
+          key: factory-images-${{ hashFiles('src/profiles.mjs') }}
       - run: npm test
       - run: npm run build
       - uses: actions/configure-pages@v5
