@@ -5,13 +5,17 @@
   "description": "MCHOSE firmware research and a browser-local voice prompt editor",
   "license": "MIT",
   "author": "Zaqvierm",
-  "contributors": [{ "name": "OpenAI Codex (AI-assisted development)" }],
+  "contributors": [
+    {
+      "name": "OpenAI Codex (AI-assisted development)"
+    }
+  ],
   "type": "module",
   "scripts": {
     "dev": "npm run prepare-core && npm run prepare-firmware && vite --host 127.0.0.1",
     "prepare-core": "node scripts/prepare-core.mjs",
     "prepare-firmware": "node scripts/fetch-firmware.mjs",
-    "build": "npm run prepare-core && npm run prepare-firmware && vite build --base=./",
+    "build": "npm run prepare-core && npm run prepare-firmware && vite build --base=./ && node scripts/prerender-copy.mjs",
     "test": "node --test tests/*.test.mjs",
     "preview": "vite preview --host 127.0.0.1"
   },

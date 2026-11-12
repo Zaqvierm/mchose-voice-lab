@@ -409,3 +409,21 @@ Object.assign(messages.zh, {
     "修改后的固件可能导致设备无法使用。本项目按现状提供，不提供保证，使用风险由使用者承担。",
   disclaimer: "风险与免责声明",
 });
+
+Object.assign(messages.ru, {
+  pageTitle: "Кастомные звуки MCHOSE V9 Pro, V9 Turbo и X9 | Voice Lab",
+  pageDescription:
+    "Кастомная озвучка MCHOSE V9 Pro, V9 Turbo+, V9 Turbo, X9 и G9 Pro: обрезка аудио, AAC/ACT и сборка прошивки в браузере.",
+});
+
+Object.assign(messages.en, {
+  pageTitle: "Custom sounds for MCHOSE V9 Pro, V9 Turbo & X9 | Voice Lab",
+  pageDescription:
+    "Custom voice prompts for MCHOSE V9 Pro, V9 Turbo+, V9 Turbo, X9 and G9 Pro. Trim audio, encode AAC/ACT and build firmware locally in your browser.",
+});
+
+Object.assign(messages.zh, {
+  pageTitle: "MCHOSE V9 Pro、V9 Turbo、X9 自定义提示音 | Voice Lab",
+  pageDescription:
+    "为 MCHOSE V9 Pro、V9 Turbo+、V9 Turbo、X9 和 G9 Pro 制作自定义提示音。在浏览器中裁剪音频、编码 AAC/ACT 并构建固件。",
+});

@@ -299,6 +299,12 @@ function applyLanguage(value) {
   setLanguage(value);
   value = getLanguage();
   document.documentElement.lang = value;
+  document.title = t("pageTitle");
+  document.querySelector('meta[name="description"]').content =
+    t("pageDescription");
+  document.querySelector('meta[property="og:title"]').content = t("pageTitle");
+  document.querySelector('meta[property="og:description"]').content =
+    t("pageDescription");
   document
     .querySelectorAll("[data-i18n]")
     .forEach((e) => (e.textContent = t(e.dataset.i18n)));
