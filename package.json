@@ -2,6 +2,10 @@
   "name": "mchose-voice-lab",
   "version": "0.1.0",
   "private": true,
+  "description": "MCHOSE firmware research and a browser-local voice prompt editor",
+  "license": "MIT",
+  "author": "Zaqvierm",
+  "contributors": [{ "name": "OpenAI Codex (AI-assisted development)" }],
   "type": "module",
   "scripts": {
     "dev": "npm run prepare-core && npm run prepare-firmware && vite --host 127.0.0.1",
@@ -15,5 +19,7 @@
     "@ffmpeg/ffmpeg": "0.12.15",
     "@ffmpeg/core": "0.12.10"
   },
-  "devDependencies": {"vite": "6.4.1"}
+  "devDependencies": {
+    "vite": "6.4.1"
+  }
 }
