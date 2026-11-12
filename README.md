@@ -2,28 +2,26 @@
 
 [Русский](README.ru.md) · English · [简体中文](README.zh.md)
 
-An independent firmware research project and a browser-local voice-prompt editor for MCHOSE headphones.
+A browser-local editor for MCHOSE voice prompts and a documented ACT/AAC firmware resource format.
 
-**Website:** https://zaqvierm.github.io/mchose-voice-lab/
+**[Open the editor](https://zaqvierm.github.io/mchose-voice-lab/)** · [Official PC updater](https://cdn.mchose.com.cn/OTA/PC/prod/index.html#/select)
 
-Select a model and firmware language from the official-image catalog, or provide your own file. Inspect the sounds actually present in that image, audition an original, import audio, trim it, preview the encoded result, and download a rebuilt firmware image.
+## Features
 
-## What is validated
+- Load a pinned original from the catalog or select a local image.
+- Inspect actual sound resources and preview the selected factory recording.
+- Trim audio, encode AAC-LC, package ACT and download a rebuilt image.
+- Preserve executable payloads, the flash map and all non-target resources.
 
-- Factory X9 ACT files contain **AAC-LC in ADTS**, wrapped by a two-byte prefix, byte-pair permutation and fixed XOR. All 36 EN/CN samples (648 frames) decode and roundtrip exactly.
-- The production updater currently lists **8 headset images for 5 models**. All 144 ACT resources across these images pass wrapper roundtrip and ADTS structural checks.
-- All 8 checksum-pinned images pass a full no-op rebuild with **byte-identical output**.
-- A custom Power On sound in X9 English 1003 was confirmed on physical headphones by the owner. **Other models and notification slots have not been individually hardware-tested.**
+Processing stays in the browser. The editor does not upload user files or flash devices. The audio engine loads on first use (~31 MB).
 
-Model support is an explicit SHA256 allowlist, not a claim that any MCHOSE firmware is safe to modify. Unknown AOTA images can be inspected where their resource filesystem is recognized; building unknown images is disabled. File names are enumerated from the image. Friendly labels do not select replacement paths.
+## Validation scope
 
-## Use
+The catalog contains 8 official images for 5 models. Each passes a byte-identical no-op rebuild. All 144 ACT resources pass AAC structural and exact wrapper-roundtrip checks. **Hardware validation covers X9 English 1003 Power On only.** Other profiles are software-validated.
 
-See [instructions](docs/rebuild.en.md), [research](docs/research.en.md), [catalog provenance](docs/firmware-catalog.md), and [validation scope](docs/validation.md).
+Unknown images are inspection-only. Source files are limited to 25 MB / 10 minutes; encoded output must fit the original sound partition.
 
-The site processes your audio and image locally. It does not upload them and does not access USB or flash hardware. The audio engine is downloaded on first use (~31 MB).
-
-There is no word-count limit. Encoded resource size must fit the existing sound partition; the app never expands the flash map. The source-audio limit (25 MB / 10 minutes) is a browser resource limit, not a manufacturer audio-format limit.
+[Instructions](docs/rebuild.en.md) · [Research](docs/research.en.md) · [Catalog](docs/firmware-catalog.md) · [Validation](docs/validation.md) · [Risk notice](DISCLAIMER.md)
 
 ## Development
 
@@ -35,13 +33,9 @@ npm test
 npm run dev
 ```
 
-For a production build use `npm run build`: it prepares the pinned FFmpeg.wasm core and retrieves checksum-verified official base images, then builds a static Vite site. Preview with `npm run preview`. GitHub Actions deploys `dist/` to GitHub Pages.
+`npm run build` prepares the audio engine and checksum-verified factory assets, then builds the static site. `npm run preview` serves the build. GitHub Actions deploys to GitHub Pages.
 
-Source Git does not contain OEM firmware, OEM audio, the owner's sample audio, SDK binaries or local memory. Published website assets include the unchanged official bases so catalog selection works without the manufacturer's missing CORS headers. Their source URLs and SHA256 values are recorded in `public/catalog.json`; all rights to vendor firmware remain with its respective owners. The MIT license applies to this project's original code, **not** those firmware images or the FFmpeg core.
-
-## Command-line tools
-
-With a locally installed FFmpeg:
+## Command line
 
 ```sh
 ffmpeg -i sound.wav -ar 16000 -ac 1 -c:a aac -profile:a aac_low -b:a 24k -aac_pns 0 -aac_tns 0 -f adts sound.aac
@@ -49,10 +43,10 @@ node scripts/voice.mjs wrap sound.aac sound.act
 node scripts/build-firmware.mjs factory.bin sound.act custom-headset.bin V_POWON.act
 ```
 
-To extract AAC: `node scripts/voice.mjs unwrap sound.act sound.aac`.
+Extract AAC with `node scripts/voice.mjs unwrap sound.act sound.aac`.
 
-## Credits and license
+## License and credits
 
-[Contributors](CONTRIBUTORS.md): Zaqvierm and AI-assisted research/development with **OpenAI Codex**, with independent Qwen discussion. This is not an official MCHOSE, Actions Technology or OpenAI project.
+Original code: [MIT](LICENSE). Vendor firmware and the FFmpeg core retain their respective licenses and rights; see [THIRD_PARTY.md](THIRD_PARTY.md). Factory binaries and user audio are not committed to source Git. Published factory assets remain unchanged and are checksum-pinned.
 
-Original project code: [MIT](LICENSE). Dependencies and vendor assets: [THIRD_PARTY.md](THIRD_PARTY.md).
+Maintained by Zaqvierm, with AI-assisted development using OpenAI Codex. [Contributors](CONTRIBUTORS.md).

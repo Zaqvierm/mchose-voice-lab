@@ -27,17 +27,50 @@
           target="_blank"
           rel="noreferrer"
           >Исходный код</a
-        ><select id="ui-language" aria-label="Language">
-          <option value="ru">Русский</option>
-          <option value="en">English</option>
-          <option value="zh">简体中文</option>
-        </select>
+        ><span class="language-switch" title="Language / Язык / 语言">
+          <svg
+            viewBox="0 0 24 24"
+            width="17"
+            height="17"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="9" />
+            <ellipse cx="12" cy="12" rx="4" ry="9" />
+            <path d="M3 12h18" />
+          </svg>
+          <img
+            id="language-flag"
+            src="./flags/ru.svg"
+            width="21"
+            height="14"
+            alt=""
+            aria-hidden="true"
+          />
+          <select id="ui-language" aria-label="Language">
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+            <option value="zh">简体中文</option>
+          </select>
+        </span>
       </nav>
     </header>
     <main>
       <div class="page-title">
         <h1 data-i18n="title">Редактор озвучки</h1>
         <p data-i18n="intro"></p>
+      </div>
+      <div class="risk-note" role="note">
+        <strong data-i18n="riskTitle"></strong>
+        <span data-i18n="riskNotice"></span>
+        <a
+          data-i18n="disclaimer"
+          href="https://github.com/Zaqvierm/mchose-voice-lab/blob/main/DISCLAIMER.md"
+          target="_blank"
+          rel="noreferrer"
+        ></a>
       </div>
       <div class="workbench">
         <aside class="firmware-panel">
@@ -85,6 +118,13 @@
             ><input id="base-file" type="file" accept=".bin" hidden />
             <p class="fine" data-i18n="baseHint"></p>
           </div>
+          <a
+            class="official-updater"
+            href="https://cdn.mchose.com.cn/OTA/PC/prod/index.html#/select"
+            target="_blank"
+            rel="noreferrer"
+            data-i18n="pcUpdater"
+          ></a>
           <div class="base-state">
             <span id="base-badge"></span
             ><strong id="base-name" data-i18n="baseEmpty"></strong>
@@ -98,7 +138,6 @@
             <summary data-i18n="caution"></summary>
             <p data-i18n="cautionText"></p>
             <p data-i18n="support"></p>
-            <p data-i18n="pcm"></p>
             <a
               id="instructions-link"
               data-i18n="instructions"
@@ -233,6 +272,13 @@
               data-i18n="report"
             ></button>
             <p class="fine" data-i18n="doneHint"></p>
+            <a
+              class="official-updater"
+              href="https://cdn.mchose.com.cn/OTA/PC/prod/index.html#/select"
+              target="_blank"
+              rel="noreferrer"
+              data-i18n="pcUpdater"
+            ></a>
           </div>
           <div
             id="status"

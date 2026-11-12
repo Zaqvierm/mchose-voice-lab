@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { setLanguage, t, voiceLabel } from "../src/i18n.mjs";
+import { setLanguage, getLanguage, t, voiceLabel } from "../src/i18n.mjs";
 test("three language dictionaries and filename fallback", () => {
   setLanguage("ru");
   assert.equal(t("title"), "Редактор озвучки");
@@ -13,4 +13,7 @@ test("three language dictionaries and filename fallback", () => {
   assert.equal(voiceLabel("V_POWON.act"), "开机");
   assert.equal(voiceLabel("OTHER.act"), "OTHER.act");
   assert.notEqual(t("staticProfile"), "staticProfile");
+  setLanguage("toString");
+  assert.equal(getLanguage(), "en");
+  assert.equal(t("title"), "Voice prompt editor");
 });

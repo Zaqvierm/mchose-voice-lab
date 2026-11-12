@@ -2,7 +2,7 @@ export const locales = { ru: "ru-RU", en: "en-US", zh: "zh-CN" };
 const messages = {
   ru: {
     title: "Редактор озвучки",
-    intro: "Выберите прошивку и замените одно звуковое уведомление.",
+    intro: "Выберите заводскую прошивку и звуковой файл для замены.",
     research: "Исследование",
     source: "Исходный код",
     uiLanguage: "Язык интерфейса",
@@ -15,11 +15,9 @@ const messages = {
     loadStock: "Загрузить выбранную",
     stockDownload: "Скачать оригинал",
     pickBase: "Выбрать .bin",
-    baseHint:
-      "Файл читается локально. Изменённая прошивка не подходит в качестве заводской базы.",
+    baseHint: "Используйте оригинальный, немодифицированный образ.",
     catalogLoading: "Загружаем каталог…",
-    catalogScope:
-      "Каталог официального PC-обновлятора. Это не полный список всех когда-либо выпущенных устройств.",
+    catalogScope: "Образы из официального PC-каталога MCHOSE.",
     baseEmpty: "Прошивка ещё не выбрана",
     baseVerified: "База проверена",
     baseInspected: "Файл прочитан",
@@ -49,7 +47,7 @@ const messages = {
     seconds: "с",
     playClip: "Послушать фрагмент",
     waveHint:
-      "Нажмите на волну, чтобы установить начало. Размер готового звука должен поместиться в раздел прошивки.",
+      "Щелчок по волне задаёт начало фрагмента. Размер готового звука проверяется при сборке.",
     process: "Подготовить звук",
     processing: "Готовим и проверяем звук…",
     engineLoading: "Первый запуск: загружаем аудиодвижок (~31 МБ)…",
@@ -63,7 +61,7 @@ const messages = {
     audioDuration: "Исходник должен длиться от 0,1 секунды до 10 минут.",
     needAudio: "Сначала выберите аудио.",
     prepared: "Результат после кодирования",
-    preparedHint: "Это звук, извлечённый из готового ACT.",
+    preparedHint: "Звук после кодирования и проверки ACT.",
     preparedReady: "Звук готов. Прослушайте результат перед сборкой.",
     downloadAct: "Скачать ACT",
     build: "Собрать прошивку",
@@ -80,24 +78,22 @@ const messages = {
     protected: "Программа, DSP, загрузчик и параметры сохранены.",
     resourcesKept: "Остальные звуки не изменены. Контрольные суммы проверены.",
     local:
-      "Звук и прошивка обрабатываются в браузере. Загрузки ваших файлов на сервер нет.",
+      "Обработка выполняется в браузере. Ваши файлы не загружаются на сервер.",
     caution: "Перед установкой",
     cautionText:
-      "Обновляйте гарнитуру, не приёмник. Не прерывайте запись. Изменение прошивки остаётся на ваш риск; заводской файл не гарантирует аварийное восстановление.",
+      "Выбирайте гарнитуру, а не приёмник. Не прерывайте запись прошивки.",
     support:
-      "Замена Power On проверена на реальных X9 с английской базой 1003. Остальные профили не считаются проверенными автоматически.",
+      "Аппаратный тест: X9, 1003 EN, Power On. Остальные профили проверены программно.",
     pcm: "Если ранее ставили экспериментальный PCM-патч, сначала уточните восстановление заводского приложения.",
     instructions: "Инструкция",
     authors: "Участники",
-    aiCredit: "Исследование и код с помощью OpenAI Codex.",
-    unofficial:
-      "Независимый проект. Не связан с MCHOSE, Actions Technology или OpenAI.",
+    aiCredit: "Разработка при участии OpenAI Codex.",
+    unofficial: "Неофициальный проект для гарнитур MCHOSE.",
     ready: "Выберите базу прошивки и аудиофайл.",
     failed: "Операция не выполнена.",
     originalBusy: "Декодируем заводской звук…",
     originalReady: "Можно прослушать выбранный заводской файл.",
-    inspection:
-      "Подписи уведомлений — подсказки. Имя и содержимое берутся из самого образа.",
+    inspection: "Список прочитан из образа. Названия уведомлений — справочные.",
     scanLimit: "Файл слишком большой для этой версии инспектора (до 16 МБ).",
     noModels: "В каталоге нет доступных гарнитур.",
     noBuild: "Пересборка доступна только для проверенного профиля.",
@@ -109,7 +105,7 @@ const messages = {
   },
   en: {
     title: "Voice prompt editor",
-    intro: "Choose a firmware image and replace one notification sound.",
+    intro: "Select a factory image and the sound resource to replace.",
     research: "Research",
     source: "Source code",
     uiLanguage: "Interface language",
@@ -122,11 +118,9 @@ const messages = {
     loadStock: "Load selected firmware",
     stockDownload: "Download original",
     pickBase: "Choose .bin",
-    baseHint:
-      "The file is read locally. A modified image cannot be used as a factory base.",
+    baseHint: "Use an original, unmodified firmware image.",
     catalogLoading: "Loading catalog…",
-    catalogScope:
-      "Official PC updater catalog; not a complete list of every device ever released.",
+    catalogScope: "Images from the official MCHOSE PC updater catalog.",
     baseEmpty: "No firmware selected",
     baseVerified: "Base verified",
     baseInspected: "Image inspected",
@@ -156,7 +150,7 @@ const messages = {
     seconds: "s",
     playClip: "Play selection",
     waveHint:
-      "Click the waveform to set the start. The encoded sound must fit the firmware partition.",
+      "Click the waveform to set the start. Encoded size is checked when building.",
     process: "Prepare audio",
     processing: "Encoding and checking audio…",
     engineLoading: "First use: loading the audio engine (~31 MB)…",
@@ -170,7 +164,7 @@ const messages = {
     audioDuration: "The source must be between 0.1 seconds and 10 minutes.",
     needAudio: "Choose an audio file first.",
     prepared: "Encoded result",
-    preparedHint: "This audio was decoded from the finished ACT file.",
+    preparedHint: "Audio decoded from the validated ACT output.",
     preparedReady: "Audio is ready. Listen before building.",
     downloadAct: "Download ACT",
     build: "Build firmware",
@@ -186,25 +180,23 @@ const messages = {
     available: "Free partition space",
     protected: "Program, DSP, bootloader and parameters are preserved.",
     resourcesKept: "Other sounds are unchanged. Checksums verified.",
-    local:
-      "Audio and firmware are processed in your browser. Your files are not uploaded to a server.",
+    local: "Processing runs in your browser. Your files are not uploaded.",
     caution: "Before installing",
     cautionText:
-      "Update the headset, not the receiver. Do not interrupt flashing. Firmware modification is at your own risk; an original image does not guarantee recovery.",
+      "Select the headset, not the receiver. Do not interrupt firmware writing.",
     support:
-      "Power On replacement was tested on physical X9 headphones with English firmware 1003. Other profiles are not automatically considered validated.",
+      "Hardware test: X9, 1003 EN, Power On. Other profiles have software validation only.",
     pcm: "If you previously installed the experimental PCM patch, check factory application restoration first.",
     instructions: "Instructions",
     authors: "Contributors",
-    aiCredit: "Research and development assisted by OpenAI Codex.",
-    unofficial:
-      "Independent project. Not affiliated with MCHOSE, Actions Technology or OpenAI.",
+    aiCredit: "Developed with assistance from OpenAI Codex.",
+    unofficial: "Unofficial project for MCHOSE headsets.",
     ready: "Choose a firmware base and an audio file.",
     failed: "The operation could not be completed.",
     originalBusy: "Decoding the factory sound…",
     originalReady: "The selected factory sound is ready to play.",
     inspection:
-      "Friendly labels are hints. File names and contents come from the image itself.",
+      "Resources are read from the image. Event labels are descriptive only.",
     scanLimit: "This inspector supports files up to 16 MB.",
     noModels: "No headset entries are available in the catalog.",
     noBuild: "Rebuilding is available only for a validated profile.",
@@ -216,7 +208,7 @@ const messages = {
   },
   zh: {
     title: "提示音编辑器",
-    intro: "选择固件，然后替换一个提示音。",
+    intro: "选择原厂固件和要替换的声音资源。",
     research: "研究记录",
     source: "源代码",
     uiLanguage: "界面语言",
@@ -229,9 +221,9 @@ const messages = {
     loadStock: "加载所选固件",
     stockDownload: "下载原始固件",
     pickBase: "选择 .bin 文件",
-    baseHint: "文件仅在本地读取。不能将修改后的固件用作原厂基础。",
+    baseHint: "请使用未经修改的原始固件。",
     catalogLoading: "正在加载目录…",
-    catalogScope: "来自官方 PC 升级工具的目录，不代表所有历史产品。",
+    catalogScope: "镜像来自官方 MCHOSE PC 升级目录。",
     baseEmpty: "尚未选择固件",
     baseVerified: "基础固件已验证",
     baseInspected: "固件已读取",
@@ -259,7 +251,7 @@ const messages = {
     duration: "时长",
     seconds: "秒",
     playClip: "试听片段",
-    waveHint: "点击波形设置开始位置。编码后的声音必须放得进固件分区。",
+    waveHint: "点击波形设置开始时间。构建时会检查编码后的大小。",
     process: "生成提示音",
     processing: "正在编码并验证音频…",
     engineLoading: "首次使用：正在加载音频引擎（约 31 MB）…",
@@ -272,7 +264,7 @@ const messages = {
     audioDuration: "源音频时长须为 0.1 秒至 10 分钟。",
     needAudio: "请先选择音频。",
     prepared: "编码后的效果",
-    preparedHint: "这里播放的是从最终 ACT 文件解码出的声音。",
+    preparedHint: "从已验证的 ACT 文件解码出的音频。",
     preparedReady: "提示音已生成，请先试听再构建固件。",
     downloadAct: "下载 ACT",
     build: "构建固件",
@@ -286,23 +278,20 @@ const messages = {
     available: "分区剩余空间",
     protected: "程序、DSP、引导程序和参数均保持原样。",
     resourcesKept: "其他声音未改变，校验已通过。",
-    local: "音频和固件均在浏览器中处理，不会上传你的文件。",
+    local: "所有处理均在浏览器中完成，不上传你的文件。",
     caution: "安装前须知",
-    cautionText:
-      "请升级耳机，不要选择接收器。写入过程中不要断开连接。修改固件须自行承担风险，持有原厂文件不代表一定能紧急恢复。",
-    support:
-      "已在真实 X9 耳机及英文 1003 固件上验证开机提示音替换，其他配置不会自动视为已验证。",
+    cautionText: "请选择耳机而非接收器，写入固件时不要中断连接。",
+    support: "硬件验证：X9、英文 1003、开机音。其他配置仅经过软件验证。",
     pcm: "如果曾安装实验性 PCM 补丁，请先确认恢复原厂应用程序。",
     instructions: "操作说明",
     authors: "参与者",
-    aiCredit: "研究与开发由 OpenAI Codex 辅助完成。",
-    unofficial:
-      "独立项目，与 MCHOSE、Actions Technology 或 OpenAI 无隶属关系。",
+    aiCredit: "开发由 OpenAI Codex 辅助完成。",
+    unofficial: "面向 MCHOSE 耳机的非官方项目。",
     ready: "请选择基础固件和音频文件。",
     failed: "操作未能完成。",
     originalBusy: "正在解码原厂声音…",
     originalReady: "可以试听所选原厂声音。",
-    inspection: "友好名称仅供参考，文件名和内容来自固件本身。",
+    inspection: "资源直接读取自镜像，事件名称仅供参考。",
     scanLimit: "此版本检查器支持最大 16 MB 的文件。",
     noModels: "目录中没有可用的耳机固件。",
     noBuild: "仅已验证的配置支持重建固件。",
@@ -315,7 +304,7 @@ const messages = {
 };
 let language = "ru";
 export function setLanguage(value) {
-  language = value in messages ? value : "en";
+  language = Object.hasOwn(messages, value) ? value : "en";
 }
 export const getLanguage = () => language;
 export function t(key, args = {}) {
@@ -395,4 +384,28 @@ Object.assign(messages.zh, {
   tooLong: "声音超出了原分区容量，请缩短片段。",
   badChecksum: "文件已损坏或未通过校验。",
   unsupportedBase: "不支持此文件结构，请选择兼容的原厂固件。",
+});
+
+Object.assign(messages.ru, {
+  pcUpdater: "Официальный обновлятор для ПК",
+  riskTitle: "Риск установки.",
+  riskNotice:
+    "Изменённая прошивка может нарушить работу устройства. Проект предоставляется «как есть», без гарантий; использование — на ваш риск.",
+  disclaimer: "Условия использования",
+});
+
+Object.assign(messages.en, {
+  pcUpdater: "Official PC updater",
+  riskTitle: "Installation risk.",
+  riskNotice:
+    "Modified firmware may render the device inoperable. The project is provided as is, without warranties; use it at your own risk.",
+  disclaimer: "Risk and warranty notice",
+});
+
+Object.assign(messages.zh, {
+  pcUpdater: "官方 PC 升级工具",
+  riskTitle: "安装风险。",
+  riskNotice:
+    "修改后的固件可能导致设备无法使用。本项目按现状提供，不提供保证，使用风险由使用者承担。",
+  disclaimer: "风险与免责声明",
 });

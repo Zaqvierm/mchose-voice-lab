@@ -273,13 +273,13 @@ function renderBase() {
     return;
   }
   const meta = state.catalog.find((e) => e.sha256 === f.digest);
-  $("base-name").textContent = state.baseFile || meta?.model || "AOTA";
+  $("base-name").textContent = meta?.model || state.baseFile || "AOTA";
   $("base-badge").textContent = t(
     f.canBuild ? "baseVerified" : "baseInspected",
   );
   $("base-badge").className = f.canBuild ? "good" : "";
   $("base-detail").textContent = meta
-    ? `${meta.model} / ${meta.version}`
+    ? `${t("version")} ${meta.version} · ${catalogLanguage(meta)}`
     : f.xml.match(/<board_name>([^<]+)/)?.[1] || "AOTA";
   $("profile-state").textContent = t(
     f.profile?.hardwareTestedPowerOn
@@ -297,12 +297,19 @@ function renderResult() {
 }
 function applyLanguage(value) {
   setLanguage(value);
+  value = getLanguage();
   document.documentElement.lang = value;
   document
     .querySelectorAll("[data-i18n]")
     .forEach((e) => (e.textContent = t(e.dataset.i18n)));
   $("ui-language").value = value;
   $("ui-language").setAttribute("aria-label", t("uiLanguage"));
+  $("language-flag").src = new URL(
+    `flags/${value === "en" ? "gb" : value}.svg`,
+    document.baseURI,
+  ).href;
+  $("start-slider").setAttribute("aria-label", t("start"));
+  $("end-slider").setAttribute("aria-label", t("end"));
   $("research-link").href = `${repo}/blob/main/docs/research.${value}.md`;
   $("instructions-link").href = `${repo}/blob/main/docs/rebuild.${value}.md`;
   renderCatalog();
