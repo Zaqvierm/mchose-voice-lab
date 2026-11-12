@@ -8,6 +8,10 @@
   --muted: #707b8b;
   --line: #e1e5eb;
 }
+.app-version {
+  margin-right: 8px;
+  font-weight: 600;
+}
 * {
   box-sizing: border-box;
 }

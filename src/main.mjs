@@ -1,4 +1,5 @@
 import "./style.css";
+import { version as appVersion } from "../package.json";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import {
   scanFirmware,
@@ -9,6 +10,7 @@ import {
 } from "./firmware.mjs";
 import { t, setLanguage, getLanguage, voiceLabel, locales } from "./i18n.mjs";
 const $ = (id) => document.getElementById(id);
+$("app-version").textContent = `v${appVersion}`;
 const repo = "https://github.com/Zaqvierm/mchose-voice-lab";
 const state = {
   factory: null,
