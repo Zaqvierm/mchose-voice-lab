@@ -10,13 +10,13 @@ import {
 } from "../src/firmware.mjs";
 import { PROFILES } from "../src/profiles.mjs";
 test("catalog pins distinct images and records hardware evidence separately", () => {
-  assert.equal(PROFILES.length, 8);
-  assert.equal(new Set(PROFILES.map((p) => p.sha256)).size, 8);
+  assert.equal(PROFILES.length, 9);
+  assert.equal(new Set(PROFILES.map((p) => p.sha256)).size, 9);
   assert.equal(PROFILES.filter((p) => p.hardwareTestedPowerOn).length, 1);
 });
 const root = process.env.X9_CATALOG_ROOT;
 test(
-  "private fixtures: all 8 profiles no-op rebuild byte-identically and enumerate actual sounds",
+  "private fixtures: all 9 profiles no-op rebuild byte-identically and enumerate actual sounds",
   { skip: !root },
   async () => {
     const names = [
@@ -26,6 +26,7 @@ test(
       "X9-0038.bin",
       "X9-1003.bin",
       "V9Turbo-0033.bin",
+      "V9Turbo-0035.bin",
       "V9Turbo-1002.bin",
       "V9TurboBase-0005.bin",
     ];

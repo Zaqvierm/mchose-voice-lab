@@ -1,7 +1,7 @@
 {
   "sourceUrl": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfig_prod.json",
-  "fetchedAt": "2026-11-12T19:06:14.505106+00:00",
-  "scopeNote": "All 8 headset images in the official production PC updater catalog (5 models), not every historical product. Each original is SHA256-pinned and statically validated. Only the X9 1003 PowerOn scenario has device evidence. Other profiles have no-op rebuild proof but no hardware test. Language evidence is recorded per entry.",
+  "fetchedAt": "2026-11-13T14:29:53.048611+00:00",
+  "scopeNote": "13 official headset images for 8 wireless models. AAC/ACT editing: 9 images / 5 models. Other formats are original-download-only. Hardware proof remains X9 English 1003 Power On only.",
   "firmwares": [
     {
       "id": "g9pro-0026",
@@ -492,6 +492,85 @@
       },
       "localAsset": "firmware/v9turbobase-0005.bin",
       "noOpRebuildVerified": true
+    },
+    {
+      "id": "g9v2-0031",
+      "model": "MCHOSE G9 V2",
+      "language": "unknown",
+      "version": "0031",
+      "url": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/G9V2/headset/MCHOSEG9V2EARPHONEOTAV0031_afc773.bin",
+      "sha256": "c5838c984992309a47f5c4ee35411adc78b8b5eebc238a0e221040d0119400ca",
+      "bytes": 1009135,
+      "kind": "headset",
+      "customization": "original-only",
+      "staticValidated": false,
+      "sourceManifest": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfigApp_prod.json",
+      "sourceType": null,
+      "languageLabel": "Language not independently verified"
+    },
+    {
+      "id": "v9turbo-0035",
+      "model": "MCHOSE V9 Turbo+",
+      "language": "zh",
+      "version": "0035",
+      "url": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/V9Turbo/headset/0035.bin",
+      "sha256": "2a763cb2a5f22c666b58025097a7c0c215e2f2982d9798b00c8e71604cc51eea",
+      "bytes": 736768,
+      "kind": "headset",
+      "customization": "static-only",
+      "staticValidated": true,
+      "sourceManifest": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfigApp_prod.json",
+      "sourceType": null,
+      "languageLabel": "Chinese / same official default branch"
+    },
+    {
+      "id": "v9pro2-0032",
+      "model": "MCHOSE V9 Pro 2",
+      "language": "unknown",
+      "version": "0032",
+      "url": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/V9PRO2/headset/V9Pro20032headsetota_a874e5.bin",
+      "sha256": "d1d0696f91d63a040e643cfa06353e0264747d650dde0d9a02d723b396196d02",
+      "bytes": 1217230,
+      "kind": "headset",
+      "customization": "original-only",
+      "staticValidated": false,
+      "sourceManifest": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfigApp_prod.json",
+      "sourceType": null,
+      "languageLabel": "Language not independently verified"
+    },
+    {
+      "id": "v9pro2-1002",
+      "model": "MCHOSE V9 Pro 2",
+      "language": "unknown",
+      "version": "1002",
+      "url": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/V9PRO2/headset/V9Pro2OVERSEAV1002headsetota_df41b5.bin",
+      "sha256": "e1e5b0cb0c0b1b4cb1a7e9e6b6ebd8292a128acf35efc4e7c1f5d27701414f21",
+      "bytes": 1229420,
+      "kind": "headset",
+      "customization": "original-only",
+      "staticValidated": false,
+      "sourceManifest": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfigApp_prod.json",
+      "sourceType": "1",
+      "languageLabel": "Language not independently verified"
+    },
+    {
+      "id": "r9-0018",
+      "model": "MCHOSE R9",
+      "language": "unknown",
+      "version": "0018",
+      "url": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/R9/headset/R9V0018headsetota_1605a3.bin",
+      "sha256": "a5bea988e222389a91aba5d599dcd98de2f3b10d2ae2405df75e72f8b48c8d43",
+      "bytes": 1401976,
+      "kind": "headset",
+      "customization": "original-only",
+      "staticValidated": false,
+      "sourceManifest": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfigApp_prod.json",
+      "sourceType": null,
+      "languageLabel": "Language not independently verified"
     }
+  ],
+  "sourceUrls": [
+    "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfig_prod.json",
+    "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfigApp_prod.json"
   ]
 }

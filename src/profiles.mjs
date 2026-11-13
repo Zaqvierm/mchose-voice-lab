@@ -88,4 +88,15 @@ export const PROFILES = Object.freeze([
     board: "cuckoo_dvb_earphone",
     hardwareTestedPowerOn: false,
   },
+{
+  "id": "v9turbo-0035",
+  "model": "MCHOSE V9 Turbo+",
+  "version": "0035",
+  "language": "zh",
+  "sha256": "2a763cb2a5f22c666b58025097a7c0c215e2f2982d9798b00c8e71604cc51eea",
+  "bytes": 736768,
+  "toneCapacity": 122880,
+  "board": "cuckoo_dvb_earphone",
+  "hardwareTestedPowerOn": false
+},
 ]);

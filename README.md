@@ -17,7 +17,7 @@ Processing stays in the browser. The editor does not upload user files or flash 
 
 ## Validation scope
 
-The catalog contains 8 official images for 5 models. Each passes a byte-identical no-op rebuild. All 144 ACT resources pass AAC structural and exact wrapper-roundtrip checks. **Hardware validation covers X9 English 1003 Power On only.** Other profiles are software-validated.
+The catalog contains 13 official images for 8 wireless models. Nine AAC/ACT images across five models support editing; four other images are original-download-only. Each editable image passes a byte-identical no-op rebuild. All 162 ACT resources pass AAC structural and exact wrapper-roundtrip checks. **Hardware validation covers X9 English 1003 Power On only.** Other profiles are software-validated.
 
 Unknown images are inspection-only. Source files are limited to 25 MB / 10 minutes; encoded output must fit the original sound partition.
 
@@ -35,7 +35,7 @@ Select `V_POWON.act` (Power on) from the image's actual resource list. Use a voi
 
 ### Are MCHOSE V9 Pro, V9 Turbo and G9 Pro supported?
 
-The catalog includes X9, V9 Pro, V9 Turbo+, V9 Turbo and G9 Pro: 8 original images in total. Available languages depend on the model. Structure and rebuilding are checked for every image, but hardware validation covers only X9 EN 1003. Unknown images can be inspected, but cannot be used to build modified firmware.
+The catalog includes X9, V9 Pro, V9 Turbo+, V9 Turbo and G9 Pro: 13 original images in total, including download-only models. Available languages depend on the model. Structure and rebuilding are checked for the nine AAC/ACT images, but hardware validation covers only X9 EN 1003. Unknown images can be inspected, but cannot be used to build modified firmware.
 
 ### Does this website flash the headphones?
 

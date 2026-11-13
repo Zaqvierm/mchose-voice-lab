@@ -33,6 +33,24 @@ The official updater uses WebHID. This project generates images but does not imp
 
 ## Models outside the current firmware catalog
 
-The [official manuals](https://www.mchose.store/pages/user-manual) list S9 and S9 Pro separately, as well as R9, V9 and G9 / G9 Pro. R9, ordinary V9, S9, S9 Pro and wired G9 do not have separate headset images in the production PC OTA manifest checked on 2026-11-13. This does not establish that no firmware exists elsewhere. They are not supported rebuild profiles; a similar model is not a substitute.
+The [official manuals](https://www.mchose.store/pages/user-manual) list S9 and S9 Pro separately, as well as R9, V9 and G9 / G9 Pro. Ordinary V9, S9 and S9 Pro do not have separate headset images in either production PC manifest checked on 2026-11-13. R9 was subsequently found in the desktop manifest, as recorded below; wired G9 is excluded. This does not establish that no firmware exists elsewhere. They are not supported rebuild profiles; a similar model is not a substitute.
 
-For any of the 8 catalog entries, select the model and language and use **Download original**. The editor retrieves the unchanged published base, checks its byte count, parses its firmware structure and checks SHA256 before passing it to the browser. The filename contains the model, language and version. This action does not replace the image or audio currently being edited. The original is a saved factory image, not a guarantee of recovery after a failed flash.
+For any of the 13 catalog entries, select the model and language and use **Download original**. The editor retrieves the unchanged published base, checks its byte count and SHA256 (and parses AOTA structure for editable images) before passing it to the browser. The filename contains the model, language and version. This action does not replace the image or audio currently being edited. The original is a saved factory image, not a guarantee of recovery after a failed flash.
+
+## Extended wireless audit: desktop M HUB catalog
+
+The installed official M HUB uses a separate manifest: [otaConfigApp_prod.json](https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfigApp_prod.json). Checking only the web updater misses current wireless models.
+
+| Model / image | Result in Voice Lab |
+|---|---|
+| V9 Turbo+ 0035 | AOTA / 18 AAC-LC ACT voices; editable after exact no-op validation |
+| G9 V2 0031 | Different container, not accepted by the AOTA parser; original download only |
+| V9 Pro 2 0032 and overseas 1002 | 17 LZMA blocks; different firmware architecture; original download only |
+| R9 0018 | 18 LZMA blocks; not AOTA/ACT; original download only |
+| V9, S9, S9 Pro | Wireless models confirmed by official manuals; no separate headset payload in either checked manifest. No substitute image or rebuild support added. |
+
+G9 wired and soundbars K20/K20 Pro/K20 GT are excluded. Driver modules (including K9 and hardware revisions) alone do not establish an available flashable headset image. Product names in regulatory filings alone are not treated as released compatible models.
+
+The Pro 2 [independent reverse-engineering project](https://gitlab.com/i3sey/mchose-v9pro2-english) documents SBC prompts and a different container. Its hardware evidence belongs to that project, not this site's parser. LZMA unpacking of both Pro 2 originals and R9 was verified offline with bounded block decompression; no headset was flashed. G9 V2's encoding and R9 audio codec are not established here. Language of the new non-AOTA images has not been independently listened to; overseas is shown as a branch label.
+
+Current totals: 13 original images / 8 wireless models; editing enabled for 9 exact AAC/ACT images / 5 models, with 162 validated ACT resources. Original download is SHA256/size checked for all formats. Only X9 EN 1003 Power On has our hardware playback evidence.

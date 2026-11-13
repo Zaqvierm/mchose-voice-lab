@@ -58,7 +58,7 @@ function controls() {
     $(id).disabled = state.busy;
   $("model-select").disabled = state.busy || !state.catalog.length;
   $("firmware-language").disabled = state.busy || !state.catalog.length;
-  $("load-stock").disabled = state.busy || !selectedCatalog();
+  $("load-stock").disabled = state.busy || !selectedCatalog() || selectedCatalog().customization === "original-only";
   $("stock-download").disabled = state.busy || !selectedCatalog();
   $("voice").disabled = state.busy || !state.factory?.voices?.length;
   const voice = selectedVoice();
@@ -236,7 +236,7 @@ function renderCatalogVariants(previous = "") {
   }
   const e = selectedCatalog();
   $("catalog-version").textContent = e
-    ? `${t("version")}: ${e.version} / ${fmt(e.bytes)} ${t("bytes")}`
+    ? `${t("version")}: ${e.version} / ${fmt(e.bytes)} ${t("bytes")}${e.customization === "original-only" ? " · " + t("originalOnly") : ""}`
     : "";
   $("stock-download").hidden = !e;
   if (e) {
@@ -663,8 +663,10 @@ $("stock-download").onclick = () =>
     if (!response.ok) fail("catalogError");
     const data = new Uint8Array(await response.arrayBuffer());
     if (data.length !== e.bytes) fail("badChecksum");
-    const original = await scanFirmware(data);
-    if (original.digest !== e.sha256) fail("badChecksum");
+    const digest = e.customization === "original-only"
+      ? Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", data)), b => b.toString(16).padStart(2,"0")).join("")
+      : (await scanFirmware(data)).digest;
+    if (digest !== e.sha256) fail("badChecksum");
     const model = e.model.replace(/[^A-Za-z0-9+_-]+/g, "-");
     download(data, `${model}-${e.language}-${e.version}-ORIGINAL.bin`);
     message("stockSaved", "good");
@@ -672,7 +674,7 @@ $("stock-download").onclick = () =>
 $("load-stock").onclick = () =>
   action(async () => {
     const e = selectedCatalog();
-    if (!e) fail("catalogError");
+    if (!e || e.customization === "original-only") fail("unsupportedBase");
     message("loadingBase", "busy");
     const response = await fetch(
       new URL(`firmware/${e.id}.bin`, document.baseURI),
