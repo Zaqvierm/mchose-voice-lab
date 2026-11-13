@@ -30,3 +30,9 @@ The official V9 Pro/X9 English-upgrade guide confirms English for V9 Pro 1015 an
 Factory images are excluded from source Git. Website builds retrieve unchanged originals and verify their pinned sizes and SHA256. A validated cache or previously published original is used if the vendor CDN is unavailable. Published same-origin assets allow catalog loading despite the vendor binaries lacking CORS headers. Vendor rights remain unchanged; see [THIRD_PARTY.md](../THIRD_PARTY.md).
 
 The official updater uses WebHID. This project generates images but does not implement device flashing.
+
+## Models outside the current firmware catalog
+
+The [official manuals](https://www.mchose.store/pages/user-manual) list S9 and S9 Pro separately, as well as R9, V9 and G9 / G9 Pro. R9, ordinary V9, S9, S9 Pro and wired G9 do not have separate headset images in the production PC OTA manifest checked on 2026-11-13. This does not establish that no firmware exists elsewhere. They are not supported rebuild profiles; a similar model is not a substitute.
+
+For any of the 8 catalog entries, select the model and language and use **Download original**. The editor retrieves the unchanged published base, checks its byte count, parses its firmware structure and checks SHA256 before passing it to the browser. The filename contains the model, language and version. This action does not replace the image or audio currently being edited. The original is a saved factory image, not a guarantee of recovery after a failed flash.

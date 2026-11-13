@@ -59,6 +59,7 @@ function controls() {
   $("model-select").disabled = state.busy || !state.catalog.length;
   $("firmware-language").disabled = state.busy || !state.catalog.length;
   $("load-stock").disabled = state.busy || !selectedCatalog();
+  $("stock-download").disabled = state.busy || !selectedCatalog();
   $("voice").disabled = state.busy || !state.factory?.voices?.length;
   const voice = selectedVoice();
   $("play-original").disabled = state.busy || !voice?.replaceable;
@@ -239,8 +240,7 @@ function renderCatalogVariants(previous = "") {
     : "";
   $("stock-download").hidden = !e;
   if (e) {
-    $("stock-download").href = e.url;
-    $("stock-download").textContent = t("stockSource");
+    $("stock-download").textContent = t("stockDownload");
   }
   $("load-stock").textContent = t("loadStock");
   controls();
@@ -654,6 +654,21 @@ function changedCatalog(keepVariant = false) {
 }
 $("model-select").onchange = () => changedCatalog(false);
 $("firmware-language").onchange = () => changedCatalog(true);
+$("stock-download").onclick = () =>
+  action(async () => {
+    const e = selectedCatalog();
+    if (!e) fail("catalogError");
+    message("loadingBase", "busy");
+    const response = await fetch(new URL(`firmware/${e.id}.bin`, document.baseURI));
+    if (!response.ok) fail("catalogError");
+    const data = new Uint8Array(await response.arrayBuffer());
+    if (data.length !== e.bytes) fail("badChecksum");
+    const original = await scanFirmware(data);
+    if (original.digest !== e.sha256) fail("badChecksum");
+    const model = e.model.replace(/[^A-Za-z0-9+_-]+/g, "-");
+    download(data, `${model}-${e.language}-${e.version}-ORIGINAL.bin`);
+    message("stockSaved", "good");
+  });
 $("load-stock").onclick = () =>
   action(async () => {
     const e = selectedCatalog();
