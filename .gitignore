@@ -12,3 +12,12 @@ Memory.md
 *.log
 __pycache__/
 .DS_Store
+
+# Offline codec tools and research outputs are not source distribution.
+*.sbc
+*.wts
+*.pcm
+*.exe
+*.dll
+*.OFFLINE-RESEARCH
+tools/vendor-tools/

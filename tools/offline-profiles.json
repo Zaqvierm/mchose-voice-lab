@@ -1,0 +1,485 @@
+[
+  {
+    "id": "v9pro2-0032",
+    "model": "MCHOSE V9 PRO 2",
+    "version": "0032",
+    "sha256": "d1d0696f91d63a040e643cfa06353e0264747d650dde0d9a02d723b396196d02",
+    "bytes": 1217230,
+    "format": "sbc-lzma",
+    "hardwareTested": false,
+    "resources": [
+      {
+        "name": "prompt-00",
+        "descriptor": 1980924,
+        "offset": 1960160,
+        "bytes": 8550,
+        "frames": 75,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-01",
+        "descriptor": 1980932,
+        "offset": 1981044,
+        "bytes": 8550,
+        "frames": 75,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-02",
+        "descriptor": 1980940,
+        "offset": 1989596,
+        "bytes": 12084,
+        "frames": 106,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-03",
+        "descriptor": 1980948,
+        "offset": 2018324,
+        "bytes": 17556,
+        "frames": 154,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-04",
+        "descriptor": 1980956,
+        "offset": 2060276,
+        "bytes": 10146,
+        "frames": 89,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-05",
+        "descriptor": 1980964,
+        "offset": 2035880,
+        "bytes": 24396,
+        "frames": 214,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-06",
+        "descriptor": 1980972,
+        "offset": 2088452,
+        "bytes": 13440,
+        "frames": 105,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-07",
+        "descriptor": 1980980,
+        "offset": 2101892,
+        "bytes": 13568,
+        "frames": 106,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-08",
+        "descriptor": 1980988,
+        "offset": 1968712,
+        "bytes": 11970,
+        "frames": 105,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-09",
+        "descriptor": 1980996,
+        "offset": 1944288,
+        "bytes": 15872,
+        "frames": 124,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-10",
+        "descriptor": 1981004,
+        "offset": 2001680,
+        "bytes": 16644,
+        "frames": 146,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-11",
+        "descriptor": 1981012,
+        "offset": 2070440,
+        "bytes": 18012,
+        "frames": 158,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-12",
+        "descriptor": 1981020,
+        "offset": 1913960,
+        "bytes": 10602,
+        "frames": 93,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-13",
+        "descriptor": 1981028,
+        "offset": 1924564,
+        "bytes": 9120,
+        "frames": 80,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-14",
+        "descriptor": 1981036,
+        "offset": 1933684,
+        "bytes": 10602,
+        "frames": 93,
+        "eventConfirmed": false
+      }
+    ]
+  },
+  {
+    "id": "v9pro2-1002",
+    "model": "MCHOSE V9 PRO 2",
+    "version": "1002",
+    "sha256": "e1e5b0cb0c0b1b4cb1a7e9e6b6ebd8292a128acf35efc4e7c1f5d27701414f21",
+    "bytes": 1229420,
+    "format": "sbc-lzma",
+    "hardwareTested": false,
+    "resources": [
+      {
+        "name": "prompt-00",
+        "descriptor": 1999128,
+        "offset": 1967652,
+        "bytes": 14136,
+        "frames": 124,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-01",
+        "descriptor": 1999136,
+        "offset": 1999248,
+        "bytes": 12996,
+        "frames": 114,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-02",
+        "descriptor": 1999144,
+        "offset": 2012244,
+        "bytes": 10146,
+        "frames": 89,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-03",
+        "descriptor": 1999152,
+        "offset": 2037668,
+        "bytes": 18468,
+        "frames": 162,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-04",
+        "descriptor": 1999160,
+        "offset": 2085776,
+        "bytes": 14022,
+        "frames": 123,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-05",
+        "descriptor": 1999168,
+        "offset": 2056136,
+        "bytes": 29640,
+        "frames": 260,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-06",
+        "descriptor": 1999176,
+        "offset": 2118400,
+        "bytes": 15732,
+        "frames": 138,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-07",
+        "descriptor": 1999184,
+        "offset": 2134132,
+        "bytes": 15618,
+        "frames": 137,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-08",
+        "descriptor": 1999192,
+        "offset": 1981788,
+        "bytes": 17100,
+        "frames": 150,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-09",
+        "descriptor": 1999200,
+        "offset": 1952260,
+        "bytes": 15390,
+        "frames": 135,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-10",
+        "descriptor": 1999208,
+        "offset": 2022392,
+        "bytes": 15276,
+        "frames": 134,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-11",
+        "descriptor": 1999216,
+        "offset": 2099816,
+        "bytes": 18582,
+        "frames": 163,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-12",
+        "descriptor": 1999224,
+        "offset": 1913956,
+        "bytes": 12084,
+        "frames": 106,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-13",
+        "descriptor": 1999232,
+        "offset": 1926040,
+        "bytes": 12996,
+        "frames": 114,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-14",
+        "descriptor": 1999240,
+        "offset": 1939036,
+        "bytes": 13224,
+        "frames": 116,
+        "eventConfirmed": false
+      }
+    ]
+  },
+  {
+    "id": "r9-0018",
+    "model": "MCHOSE R9",
+    "version": "0018",
+    "sha256": "a5bea988e222389a91aba5d599dcd98de2f3b10d2ae2405df75e72f8b48c8d43",
+    "bytes": 1401976,
+    "format": "sbc-lzma",
+    "hardwareTested": false,
+    "resources": [
+      {
+        "name": "prompt-00",
+        "descriptor": 2005496,
+        "offset": 1984732,
+        "bytes": 8550,
+        "frames": 75,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-01",
+        "descriptor": 2005504,
+        "offset": 2005696,
+        "bytes": 8550,
+        "frames": 75,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-02",
+        "descriptor": 2005512,
+        "offset": 2014248,
+        "bytes": 12084,
+        "frames": 106,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-03",
+        "descriptor": 2005520,
+        "offset": 2042976,
+        "bytes": 17556,
+        "frames": 154,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-04",
+        "descriptor": 2005528,
+        "offset": 2084928,
+        "bytes": 10146,
+        "frames": 89,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-05",
+        "descriptor": 2005536,
+        "offset": 2060532,
+        "bytes": 24396,
+        "frames": 214,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-06",
+        "descriptor": 2005544,
+        "offset": 2289924,
+        "bytes": 13440,
+        "frames": 105,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-07",
+        "descriptor": 2005552,
+        "offset": 2303364,
+        "bytes": 13568,
+        "frames": 106,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-08",
+        "descriptor": 2005560,
+        "offset": 1993284,
+        "bytes": 11970,
+        "frames": 105,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-09",
+        "descriptor": 2005568,
+        "offset": 1968860,
+        "bytes": 15872,
+        "frames": 124,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-10",
+        "descriptor": 2005576,
+        "offset": 2026332,
+        "bytes": 16644,
+        "frames": 146,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-11",
+        "descriptor": 2005584,
+        "offset": 2255724,
+        "bytes": 18012,
+        "frames": 158,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-12",
+        "descriptor": 2005592,
+        "offset": 1938532,
+        "bytes": 10602,
+        "frames": 93,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-13",
+        "descriptor": 2005600,
+        "offset": 1949136,
+        "bytes": 9120,
+        "frames": 80,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-14",
+        "descriptor": 2005608,
+        "offset": 1958256,
+        "bytes": 10602,
+        "frames": 93,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-15",
+        "descriptor": 2005616,
+        "offset": 2095092,
+        "bytes": 16074,
+        "frames": 141,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-16",
+        "descriptor": 2005624,
+        "offset": 2111168,
+        "bytes": 17556,
+        "frames": 154,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-17",
+        "descriptor": 2005632,
+        "offset": 2128724,
+        "bytes": 18582,
+        "frames": 163,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-18",
+        "descriptor": 2005640,
+        "offset": 2147308,
+        "bytes": 18240,
+        "frames": 160,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-19",
+        "descriptor": 2005648,
+        "offset": 2165548,
+        "bytes": 17784,
+        "frames": 156,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-20",
+        "descriptor": 2005656,
+        "offset": 2183332,
+        "bytes": 18354,
+        "frames": 161,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-21",
+        "descriptor": 2005664,
+        "offset": 2201688,
+        "bytes": 18012,
+        "frames": 158,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-22",
+        "descriptor": 2005672,
+        "offset": 2219700,
+        "bytes": 17784,
+        "frames": 156,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-23",
+        "descriptor": 2005680,
+        "offset": 2237484,
+        "bytes": 18240,
+        "frames": 160,
+        "eventConfirmed": false
+      },
+      {
+        "name": "prompt-24",
+        "descriptor": 2005688,
+        "offset": 2273736,
+        "bytes": 16188,
+        "frames": 142,
+        "eventConfirmed": false
+      }
+    ]
+  },
+  {
+    "id": "g9v2-0031",
+    "model": "MCHOSE G9 V2",
+    "version": "0031",
+    "sha256": "c5838c984992309a47f5c4ee35411adc78b8b5eebc238a0e221040d0119400ca",
+    "bytes": 1009135,
+    "format": "wts-jlfs",
+    "key": 45511,
+    "hardwareTested": false
+  }
+]

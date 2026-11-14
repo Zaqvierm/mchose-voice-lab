@@ -25,6 +25,7 @@ jobs:
           path: public/firmware
           key: factory-images-${{ hashFiles('src/profiles.mjs') }}
       - run: npm test
+      - run: python3 -m unittest discover -s tests -p test_offline.py -v
       - run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

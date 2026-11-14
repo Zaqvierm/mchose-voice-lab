@@ -67,3 +67,8 @@ The hardware-tested image SHA256 is `e92501a68b7c7ca8b3d3434c454b7f8615068ee33d3
 All eight current official headset images across five models use the inspected SDFS transform and AAC wrapper: 144 ACT resources. Each exact image has a full byte-identical no-op rebuild test. Resource lists differ by model, so the UI enumerates actual files instead of assigning an X9 path to another device. Only X9 English 1003 has the hardware evidence above.
 
 See [catalog provenance](firmware-catalog.md), [validation](validation.md), [contributors](../CONTRIBUTORS.md) and the implementation in `src/firmware.mjs`.
+
+
+## Additional wireless formats
+
+[SBC/LZMA: V9 Pro 2, R9 · WTS/JLFS: G9 V2](wireless.en.md) · [CLI](offline.en.md) · [Models](compatibility.en.md)

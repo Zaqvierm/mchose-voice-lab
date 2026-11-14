@@ -17,3 +17,13 @@ Owner audio (including the test sound used during research), original voice reco
 When the manufacturer's CDN is unavailable, the build may reuse a cached or previously published original from this project's website. The exact same SHA256 and size are required; no alternative version is silently substituted. An initial publication still requires at least one valid original source. Cache/mirror transport does not change vendor ownership.
 
 MCHOSE, Actions Technology, OpenAI Codex and other names identify relevant products or assistance, not endorsement. See [CONTRIBUTORS.md](CONTRIBUTORS.md).
+
+
+## Offline research and codec references
+
+- i3sey's [V9 Pro 2 research](https://gitlab.com/i3sey/mchose-v9pro2-english) supplied an external LZMA/SBC lead. Source container layouts and resource maps were independently checked; its hardware result is not project evidence. It is a reference, not a project author credit.
+- [kagaimiq/jl-misctools](https://github.com/kagaimiq/jl-misctools) describes the JLFS/ENC/SFC family. This repository contains its own constrained G9 parser and source-specific validation. No upstream tool code is vendored.
+- [Jieli-Tech/fw-AC63_BT_SDK](https://github.com/Jieli-Tech/fw-AC63_BT_SDK) provides the official WTGv2 audio converters and conversion sequence. `prepare-tools` retrieves three exact SHA256-pinned Windows executables directly from that repository. Their manufacturer rights and applicable upstream terms remain unchanged. They are not included in Git, source archives or the website, and are not relicensed under this project's MIT license.
+- [xqy2006/jsc2js](https://github.com/xqy2006/jsc2js) was a static research tool. It is not bundled or needed at runtime.
+
+The offline CLI requires a user-provided native FFmpeg installation; its license and build configuration remain the user's installed distribution's responsibility. No vendor firmware, factory voice audio, downloaded codec executables or app disassembly is committed.

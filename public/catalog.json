@@ -496,7 +496,7 @@
     {
       "id": "g9v2-0031",
       "model": "MCHOSE G9 V2",
-      "language": "unknown",
+      "language": "zh",
       "version": "0031",
       "url": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/G9V2/headset/MCHOSEG9V2EARPHONEOTAV0031_afc773.bin",
       "sha256": "c5838c984992309a47f5c4ee35411adc78b8b5eebc238a0e221040d0119400ca",
@@ -506,7 +506,10 @@
       "staticValidated": false,
       "sourceManifest": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfigApp_prod.json",
       "sourceType": null,
-      "languageLabel": "Language not independently verified"
+      "languageLabel": "Chinese: tone_zh directory and decoded factory Power On listening confirmed",
+      "offlineExperimental": true,
+      "offlineFormat": "WTS / JLFS",
+      "languageEvidence": "JLFS tone_zh directory; owner confirmed intelligible Chinese factory Power On. This is not modified-image hardware validation."
     },
     {
       "id": "v9turbo-0035",
@@ -536,7 +539,9 @@
       "staticValidated": false,
       "sourceManifest": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfigApp_prod.json",
       "sourceType": null,
-      "languageLabel": "Language not independently verified"
+      "languageLabel": "Language not independently verified",
+      "offlineExperimental": true,
+      "offlineFormat": "SBC / LZMA"
     },
     {
       "id": "v9pro2-1002",
@@ -551,7 +556,9 @@
       "staticValidated": false,
       "sourceManifest": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfigApp_prod.json",
       "sourceType": "1",
-      "languageLabel": "Language not independently verified"
+      "languageLabel": "Language not independently verified",
+      "offlineExperimental": true,
+      "offlineFormat": "SBC / LZMA"
     },
     {
       "id": "r9-0018",
@@ -566,7 +573,9 @@
       "staticValidated": false,
       "sourceManifest": "https://cdn.mchose.com.cn/OTA/PC/prod/otaFile/otaConfigApp_prod.json",
       "sourceType": null,
-      "languageLabel": "Language not independently verified"
+      "languageLabel": "Language not independently verified",
+      "offlineExperimental": true,
+      "offlineFormat": "SBC / LZMA"
     }
   ],
   "sourceUrls": [

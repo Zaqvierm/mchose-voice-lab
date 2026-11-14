@@ -239,6 +239,7 @@ function renderCatalogVariants(previous = "") {
     ? `${t("version")}: ${e.version} / ${fmt(e.bytes)} ${t("bytes")}${e.customization === "original-only" ? " · " + t("originalOnly") : ""}`
     : "";
   $("stock-download").hidden = !e;
+  $("offline-tools-link").hidden = !e || !e.offlineExperimental;
   if (e) {
     $("stock-download").textContent = t("stockDownload");
   }
@@ -320,6 +321,8 @@ function applyLanguage(value) {
   $("end-slider").setAttribute("aria-label", t("end"));
   $("research-link").href = `${repo}/blob/main/docs/research.${value}.md`;
   $("instructions-link").href = `${repo}/blob/main/docs/rebuild.${value}.md`;
+  $("compatibility-link").href = `${repo}/blob/main/docs/compatibility.${value}.md`;
+  $("offline-tools-link").href = `${repo}/blob/main/docs/offline.${value}.md`;
   renderCatalog();
   renderVoices();
   renderBase();

@@ -2,7 +2,7 @@
 
 [Русский](README.ru.md) · English · [简体中文](README.zh.md)
 
-A browser-local editor for MCHOSE voice prompts and a documented ACT/AAC firmware resource format.
+MCHOSE voice prompt editing and firmware audio research: AAC/ACT in the browser, plus experimental SBC/LZMA and WTS/JLFS tools for local use.
 
 **[Open the editor](https://zaqvierm.github.io/mchose-voice-lab/)** · [Official PC updater](https://cdn.mchose.com.cn/OTA/PC/prod/index.html#/select)
 
@@ -80,3 +80,10 @@ Extract AAC with `node scripts/voice.mjs unwrap sound.act sound.aac`.
 Original code: [MIT](LICENSE). Vendor firmware and the FFmpeg core retain their respective licenses and rights; see [THIRD_PARTY.md](THIRD_PARTY.md). Factory binaries and user audio are not committed to source Git. Published factory assets remain unchanged and are checksum-pinned.
 
 Maintained by Zaqvierm, with AI-assisted development using OpenAI Codex. [Contributors](CONTRIBUTORS.md).
+
+
+## Offline experimental models
+
+[V9 Pro 2 / R9 / G9 V2: CLI](docs/offline.en.md) · [Models](docs/compatibility.en.md) · [Research](docs/wireless.en.md)
+
+The browser offers originals and links to the separate offline workflow. The Python CLI validates the exact original, encodes user audio and rebuilds an experimental image with a preview and report. These modified-image profiles have no project hardware validation.

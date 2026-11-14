@@ -2,7 +2,7 @@
 
 [Русский](README.ru.md) · [English](README.md) · 简体中文
 
-在浏览器本地运行的 MCHOSE 提示音编辑器，以及 ACT/AAC 固件资源格式研究。
+MCHOSE 提示音编辑与固件音频研究：浏览器支持 AAC/ACT，实验性本地工具支持 SBC/LZMA 和 WTS/JLFS。
 
 **[打开编辑器](https://zaqvierm.github.io/mchose-voice-lab/)** · [官方 PC 升级工具](https://cdn.mchose.com.cn/OTA/PC/prod/index.html#/select)
 
@@ -62,3 +62,10 @@ Node.js 22+：`npm ci`、`npm test`、`npm run dev`。正式构建：`npm run bu
 原创代码采用 [MIT](LICENSE)。厂商固件权利与 FFmpeg 许可证单独保留，见 [THIRD_PARTY.md](THIRD_PARTY.md)。原厂二进制文件和用户音频不存入源代码 Git。网站发布的原厂镜像保持不变并校验哈希。
 
 维护者为 Zaqvierm，开发由 OpenAI Codex 辅助完成。[参与者](CONTRIBUTORS.md)。
+
+
+## 实验性离线配置
+
+[V9 Pro 2 / R9 / G9 V2: CLI](docs/offline.zh.md) · [型号](docs/compatibility.zh.md) · [研究](docs/wireless.zh.md)
+
+这些型号在浏览器中提供原始文件及独立离线流程链接。Python CLI验证准确原始镜像、编码用户音频并生成实验镜像、试听文件及报告。本项目尚未对这些修改后配置进行硬件验证。

@@ -67,3 +67,8 @@ P[2*i+1] = C[2*i]   XOR 0x14
 当前官方目录另核对了 5 型号、8 镜像，共 144 个 ACT；每个镜像都通过不修改内容的逐字节一致重建。因此工具使用明确的镜像哈希配置，并读取各镜像实际资源，而非给其他耳机硬套 X9 文件名。
 
 [目录来源](firmware-catalog.md) · [验证范围](validation.md) · [参与者](../CONTRIBUTORS.md)
+
+
+## 更多无线固件格式
+
+[SBC/LZMA: V9 Pro 2, R9 · WTS/JLFS: G9 V2](wireless.zh.md) · [CLI](offline.zh.md) · [型号](compatibility.zh.md)

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "wtgv2_decode.exe",
+    "url": "https://raw.githubusercontent.com/Jieli-Tech/fw-AC63_BT_SDK/fdc018de81629e21e594d677cf05f87d288be0f0/cpu/bd19/tools/AC632N_config_tool/conf/source/tone/wtgv2_decode.exe",
+    "sha256": "d9388e8eedb7a3b4295d1f524c347e70512412ac54712e1737196f8380ff663b",
+    "vendorCommit": "fdc018de81629e21e594d677cf05f87d288be0f0"
+  },
+  {
+    "name": "wtgv2_encode.exe",
+    "url": "https://raw.githubusercontent.com/Jieli-Tech/fw-AC63_BT_SDK/fdc018de81629e21e594d677cf05f87d288be0f0/cpu/bd19/tools/AC632N_config_tool/conf/source/tone/wtgv2_encode.exe",
+    "sha256": "43cd39a0728918ca87accb5d6616cb3025211969df0a8d31e0286491ad53eb92",
+    "vendorCommit": "fdc018de81629e21e594d677cf05f87d288be0f0"
+  },
+  {
+    "name": "wtgv2_resample.exe",
+    "url": "https://raw.githubusercontent.com/Jieli-Tech/fw-AC63_BT_SDK/fdc018de81629e21e594d677cf05f87d288be0f0/cpu/bd19/tools/AC632N_config_tool/conf/source/tone/wtgv2_resample.exe",
+    "sha256": "9a4d8234851c9a5a4fd29c151166b5ad641e4e7856e0cc6ad0b76e53364d4273",
+    "vendorCommit": "fdc018de81629e21e594d677cf05f87d288be0f0"
+  }
+]
