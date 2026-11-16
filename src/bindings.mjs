@@ -32,6 +32,18 @@ export const BINDING_EVENTS = Object.freeze({
 });
 export const BINDING_ACTIONS = Object.freeze({
   play: 9,
+  previous: 0x0a,
+  next: 0x0b,
+  volumeUp: 0x10,
+  volumeDown: 0x11,
+  callVolumeUp: 0x14,
+  callVolumeDown: 0x15,
+  answer: 0x16,
+  reject: 0x17,
+  hangup: 0x18,
+  assistantStart: 0x1f,
+  assistantStop: 0x20,
+  rgb: 0x2c,
   connection: 0x38,
   soundMode: 0x36,
   microphone: 0x1d,
@@ -85,9 +97,14 @@ function tableInfo(raw) {
   );
   const merged = d[0].bytes.slice();
   merged.set(u[0].bytes, u[0].offset);
-  return { fs, resources, user, patch: u[0], merged };
+  return { fs, resources, user, patch: u[0], merged, defaults: d[0].bytes };
 }
-export function planBindings(table, changes, patch = { offset: 2, size: 231 }) {
+export function planBindings(
+  table,
+  changes,
+  patch = { offset: 2, size: 231 },
+  defaults = table,
+) {
   need(
     table.length === 240 && Array.isArray(changes) && changes.length <= 12,
     "Invalid key edits",
@@ -95,6 +112,12 @@ export function planBindings(table, changes, patch = { offset: 2, size: 231 }) {
   const out = table.slice(),
     seen = new Set();
   for (const change of changes) {
+    need(
+      Object.hasOwn(BINDING_BUTTONS, change.button) &&
+        Object.hasOwn(BINDING_EVENTS, change.event) &&
+        Object.hasOwn(BINDING_ACTIONS, change.action),
+      "Unsupported button, event or action",
+    );
     const key = BINDING_BUTTONS[change.button],
       event = BINDING_EVENTS[change.event],
       action = BINDING_ACTIONS[change.action];
@@ -102,8 +125,9 @@ export function planBindings(table, changes, patch = { offset: 2, size: 231 }) {
     const pair = key + ":" + event;
     need(!seen.has(pair), "Duplicate key gesture");
     seen.add(pair);
-    const source = Array.from({ length: 40 }, (_, i) =>
-      table.slice(i * 6, i * 6 + 6),
+    need(defaults.length === 240, "Invalid default key table");
+    const source = Array.from({ length: 80 }, (_, i) =>
+      (i < 40 ? table : defaults).slice((i % 40) * 6, (i % 40) * 6 + 6),
     ).find((r) => r[0] === action);
     need(source, "Unknown factory action");
     // Retain common 0x3a hooks. Replace only the explicit action for this gesture.
@@ -283,7 +307,7 @@ export async function buildBindings(
     app = await unpackBindingApp(source.bytes, codec);
   need((await sha256(app.raw)) === RAW_SHA, "Unknown application program");
   const info = tableInfo(app.raw),
-    planned = planBindings(info.merged, changes, info.patch);
+    planned = planBindings(info.merged, changes, info.patch, info.defaults);
   const user = info.user.bytes.slice();
   user.set(
     planned.subarray(info.patch.offset, info.patch.offset + info.patch.size),

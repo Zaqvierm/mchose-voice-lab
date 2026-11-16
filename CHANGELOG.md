@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.0 — 2026-11-16
+
+- Replaced the long binding table with button / gesture selectors and an action list alongside the factory assignment, plus a restorable edit summary.
+- Expanded to 16 native actions using verified factory templates, including previously unassigned track commands and supported HFP assistant requests.
+- Audited all six located direct key-registration tables: 56 unique IDs, 40 without factory CFG12/13 gestures. Published the complete registry with restricted/unknown states rather than treating every ID as an available function.
+- Documented native Bluetooth media/call limits and the distinction between button combinations, macros, USB HID and phone app launching. Power, pairing and timing protections remain in force. No hardware validation is claimed.
+
 ## 1.2.0 — 2026-11-16
 
 - Added experimental browser-local G / Mic button assignments for the exact X9 EN 1003 original; standalone or combined with audio editing.

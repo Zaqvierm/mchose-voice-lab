@@ -1,5 +1,13 @@
 # Validation record
 
+## Native-command editor 1.3.0 — 2026-11-16
+
+The three-step editor exposes 16 whitelisted actions, with factory-template fallback for disabled X9 commands. The static audit records 56 unique IDs across six direct registrations; 40 lack factory CFG12/13 assignments. Registration is not hardware support or proof of a meaningful handler in every state.
+
+All 16 actions were planned against the exact private original while retaining Power records. The test suite covers disabled-action templates without restoring old gestures, duplicate/unsupported/prototype-property inputs, the 56-ID catalog and three locale dictionaries. Existing audio-profile/no-op tests remain in place. Custom keys, combined audio/key builds and final decompression are checked in software.
+
+The local browser selected G triple-click / Next track with no audio upload. Power's action control was disabled, the 17-option list included Factory + 16 actions, locale changes retained the selection, and per-gesture factory restore worked. The downloaded 743,936-byte image, SHA256 `5b5cab038a5175d9fb75c0e809305b1ece9e1050e4e9dc580c10730b6d31656e`, passed independent Python AOTA/application/SDFS checks and contained the intended `0B 07 03 00 10 00` entry. Instructions, Power and pairing configuration and other resources were unchanged. These remain software/UI-state checks; the file was not flashed and visual screenshot capture was unavailable.
+
 ## Experimental X9 button bindings — 2026-11-16
 
 Exact X9 EN 1003 only. The builder reopens the SHA256-pinned original, overlays CFG records at their declared offsets, retains Power records and verifies the final decompressed application against the intended configuration. No-op output is byte-identical. Test builds preserve executable instructions, bootloader, parameter map, pairing configuration and other application resources. Custom bindings have no hardware proof; action labels are correlated with the official manual. See [button research](bindings.en.md).

@@ -557,3 +557,112 @@ Object.assign(messages.zh, {
   bindingsResources:
     "仅修改了应用内的按键表，以及所选提示音资源。完整性校验已通过。",
 });
+
+Object.assign(messages.ru, {
+  bindingsScope:
+    "Выберите кнопку, жест и действие справа. Доступны 16 штатных действий: медиа, звонки и функции наушников. Можно собрать бинды отдельно или вместе со звуком. Новые назначения ещё не проверены на устройстве.",
+  bindingsStepButton: "1. Кнопка",
+  bindingsStepGesture: "2. Нажатие",
+  bindingsStepAction: "3. Действие",
+  bindingsSelectionHint:
+    "Выбор кнопки и жеста не меняет прошивку. Назначение меняется при выборе действия справа.",
+  bindingsEdits: "Ваши изменения",
+  bindingsNoEdits: "Все назначения заводские.",
+  bindingsRestore: "Вернуть заводское",
+  bindingsFactoryHint:
+    "Сохраняется исходная запись выбранного жеста. Удержания и интервалы между кликами остаются заводскими.",
+  bindingsScopeMedia:
+    "Штатное управление медиаплеером. Телефон или ПК и активный плеер решают, как выполнить команду.",
+  bindingsScopeCall:
+    "Действие для входящего или активного звонка. Вне соответствующего состояния оно может игнорироваться.",
+  bindingsScopeVolume:
+    "Громкость текущего аудиорежима. Синхронизация с устройством зависит от подключения.",
+  bindingsScopeAssistant:
+    "Штатный запрос голосового помощника через HFP. Требуется поддержка телефона; прошивка не выбирает конкретное приложение.",
+  bindingsScopeLocal:
+    "Штатная функция наушников. Доступность зависит от текущего режима подключения.",
+  bindAction_previous: "Предыдущий трек",
+  bindAction_next: "Следующий трек",
+  bindAction_volumeUp: "Громкость +",
+  bindAction_volumeDown: "Громкость −",
+  bindAction_callVolumeUp: "Громкость звонка +",
+  bindAction_callVolumeDown: "Громкость звонка −",
+  bindAction_answer: "Ответить на звонок",
+  bindAction_hangup: "Завершить звонок",
+  bindAction_assistantStart: "Запросить голосового помощника",
+  bindAction_assistantStop: "Остановить голосового помощника",
+  bindAction_rgb: "Подсветка вкл. / выкл.",
+  bindAction_power: "Включение / выключение питания 🔒",
+  bindAction_service: "Защищённое заводское действие",
+});
+Object.assign(messages.en, {
+  bindingsScope:
+    "Choose a button, gesture and action on the right. There are 16 native media, call and headset actions. Build bindings alone or combine them with audio. New assignments have no hardware validation.",
+  bindingsStepButton: "1. Button",
+  bindingsStepGesture: "2. Gesture",
+  bindingsStepAction: "3. Action",
+  bindingsSelectionHint:
+    "Selecting a button or gesture does not edit the firmware. Choose an action on the right to change its assignment.",
+  bindingsEdits: "Your changes",
+  bindingsNoEdits: "All assignments are factory-original.",
+  bindingsRestore: "Restore factory",
+  bindingsFactoryHint:
+    "Keep the original entry for this gesture. Hold durations and multi-click timing remain factory-original.",
+  bindingsScopeMedia:
+    "Native media control. The phone or PC and the active player determine how to handle the command.",
+  bindingsScopeCall:
+    "For an incoming or active call. The action may be ignored outside its applicable call state.",
+  bindingsScopeVolume:
+    "Volume for the current audio mode. Host volume synchronization depends on the connection.",
+  bindingsScopeAssistant:
+    "Native HFP voice-assistant request. The phone must support it; firmware does not select a specific app.",
+  bindingsScopeLocal:
+    "Native headset function. Availability depends on the current connection mode.",
+  bindAction_previous: "Previous track",
+  bindAction_next: "Next track",
+  bindAction_volumeUp: "Volume up",
+  bindAction_volumeDown: "Volume down",
+  bindAction_callVolumeUp: "Call volume up",
+  bindAction_callVolumeDown: "Call volume down",
+  bindAction_answer: "Answer call",
+  bindAction_hangup: "End call",
+  bindAction_assistantStart: "Request voice assistant",
+  bindAction_assistantStop: "Stop voice assistant",
+  bindAction_rgb: "Lighting on / off",
+  bindAction_power: "Power on / off 🔒",
+  bindAction_service: "Protected factory action",
+});
+Object.assign(messages.zh, {
+  bindingsScope:
+    "依次选择按键、操作，再从右侧选择功能。提供 16 项原生媒体、通话及耳机功能。可单独构建按键，也可与提示音一起构建。新映射尚无实机验证。",
+  bindingsStepButton: "1. 按键",
+  bindingsStepGesture: "2. 操作",
+  bindingsStepAction: "3. 功能",
+  bindingsSelectionHint:
+    "选择按键或操作不会修改固件；在右侧选择功能后才会更改映射。",
+  bindingsEdits: "已修改的映射",
+  bindingsNoEdits: "全部使用出厂映射。",
+  bindingsRestore: "恢复出厂映射",
+  bindingsFactoryHint: "保留此操作的原始配置。长按及连击时间保持出厂设置。",
+  bindingsScopeMedia:
+    "原生媒体控制。手机、电脑及当前播放器决定如何处理该命令。",
+  bindingsScopeCall: "适用于来电或通话状态；不满足条件时可能被忽略。",
+  bindingsScopeVolume:
+    "调节当前音频模式的音量，是否同步设备音量取决于连接方式。",
+  bindingsScopeAssistant:
+    "原生 HFP 语音助手请求，需要手机支持；固件无法指定打开某个应用。",
+  bindingsScopeLocal: "耳机原生功能，是否可用取决于当前连接模式。",
+  bindAction_previous: "上一曲",
+  bindAction_next: "下一曲",
+  bindAction_volumeUp: "音量增加",
+  bindAction_volumeDown: "音量减小",
+  bindAction_callVolumeUp: "通话音量增加",
+  bindAction_callVolumeDown: "通话音量减小",
+  bindAction_answer: "接听电话",
+  bindAction_hangup: "挂断电话",
+  bindAction_assistantStart: "请求语音助手",
+  bindAction_assistantStop: "停止语音助手",
+  bindAction_rgb: "灯光开 / 关",
+  bindAction_power: "开机 / 关机 🔒",
+  bindAction_service: "受保护的出厂操作",
+});

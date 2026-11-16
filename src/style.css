@@ -688,6 +688,14 @@ footer p {
 }
  .bindings-panel { margin-top:24px; padding-top:20px; border-top:1px solid var(--line, #ddd); }
  .bindings-scroll { overflow-x:auto; }
- #bindings-table { width:100%; border-collapse:collapse; font-size:13px; }
- #bindings-table th, #bindings-table td { padding:9px 7px; text-align:left; border-bottom:1px solid var(--line, #ddd); }
- #bindings-table select { max-width:100%; width:100%; min-width:200px; }
+ #bindings-table { font-size:13px; }
+ #bindings-table select { max-width:100%; width:100%; }
+ .binding-picker { display:grid; grid-template-columns:minmax(150px,0.8fr) minmax(230px,1.2fr); gap:22px; margin-top:18px; }
+ .binding-picker label { display:block; font-weight:600; margin-bottom:16px; }
+ .binding-picker select { margin-top:7px; font-weight:400; }
+ .binding-picker select[size] { min-height:250px; background:white; }
+ .binding-picker option { padding:7px; }
+ .binding-steps p { color:var(--muted); font-size:12px; }
+ .binding-edits { margin-top:18px; padding-top:12px; border-top:1px solid var(--line); }
+ .binding-edit-row { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:7px 0; }
+ @media(max-width:650px) { .binding-picker { grid-template-columns:1fr; gap:5px; } }

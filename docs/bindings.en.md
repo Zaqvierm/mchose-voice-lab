@@ -14,7 +14,9 @@ Each six-byte entry contains an action ID, internal key code, two additional byt
 
 ## Editor and protection
 
-G and Mic support single through five clicks and the existing hold gesture. Choices are play/pause, connection switching, sound mode switching and microphone toggle. The planner copies existing factory action records, including additional fields, retains common `0x3A` hooks and never changes hold durations or multi-click timing windows.
+Choose a button, then a gesture, then an action from the list on the right. The original assignment is shown alongside it; your edits are listed separately with per-gesture restore. G and Mic support single through five clicks and the existing hold. Power is visible but locked.
+
+There are 16 choices: play/pause, previous/next track, media volume up/down, call volume up/down, answer/reject/end call, request/stop voice assistant, lighting toggle, connection switching, sound mode switching and microphone toggle. Disabled X9 actions use complete factory templates from `defcfg`, including additional fields; this does not reactivate their old gestures. Common `0x3A` hooks and factory timing settings remain unchanged.
 
 Load X9 EN 1003, choose assignments and build. Audio is optional; a prepared sound can be included in the same image. The factory option leaves a gesture untouched. Download the image and its JSON report; install separately with the official updater.
 
@@ -25,3 +27,11 @@ The builder repairs SDFS sums, the compressed application header, XML and AOTA C
 ## Validation limits
 
 No-op output is byte-identical to the factory image. Custom bindings are extracted again after rebuilding; negative tests reject unknown keys/actions, duplicate gestures and missing power. Private original-image tests are explicitly skipped when fixtures are unavailable. Newly compressed chunks and custom assignments still require hardware validation. Multi-click latency, all action contexts and complete action-ID dispatch remain unresolved. Arbitrary numeric IDs, GPIO changes, timing edits, power changes and pairing edits are not exposed. Hardware-tested X9 custom audio does not establish custom-binding compatibility.
+
+## Registration audit and native Bluetooth limits
+
+All six located direct key-table registrations were inspected: main, btmusic, btcall, two LE Audio contexts and usound. They contain 56 unique IDs; 40 lack an assignment in factory X9 CFG 12/13. Registered does not mean implemented, useful or safe in every mode. [Full inventory](key-command-inventory.md) · [JSON](../public/key-commands.json). Language actions `0x25`–`0x27` reach `VOICE_LANG` persistence, but are restricted because a second voice set is not established. Unknown and service actions are not given invented labels or exposed as selectable commands.
+
+Previous/next dispatch reaches internally named media commands. Assistant start/stop reaches HFP voice-recognition paths with a support check and a Siri-named log. This requests the phone's supported assistant; it cannot choose an arbitrary application. [AVRCP](https://files.bluetooth.com/wp-content/uploads/dlm_uploads/2024/10/AVRCP_v1.6.3.pdf) provides native media control and [HFP](https://www.bluetooth.com/specifications/specs/hands-free-profile-1-7-2/) call/voice functions. Android routes media buttons to a system-selected [MediaSession](https://developer.android.com/media/legacy/media-buttons). Phone/player compatibility remains a separate requirement.
+
+The ID 13 combination table stores two key codes, a gesture mask and an action ID. A stock two-button hold exists for pairing; this does not establish arbitrary fast sequences or configurable timing. A combination selects an existing action, not an app-launch instruction or macro script. RGB, sound mode and microphone controls may remain local to the headset. USB HID code does not establish a Bluetooth HID keyboard. Arbitrary shortcuts, app launches and multi-command macros are not implemented; they require matching phone-side support or additional firmware/profile work.

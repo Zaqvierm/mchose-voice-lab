@@ -1,0 +1,1316 @@
+{
+  "model": "MCHOSE X9",
+  "firmware": "1003 EN",
+  "rawAppSha256": "4538318bfe55538caf702ad7e83de03a74160914a466bdfb96c65334e17a5338",
+  "scope": "Static registration inventory; not all registered IDs are implemented or safe to assign. No hardware validation.",
+  "registeredCount": 56,
+  "withoutFactoryGesture": 40,
+  "commands": [
+    {
+      "id": 1,
+      "hex": "0x01",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": true,
+      "editorAction": null,
+      "status": "protected",
+      "dispatch": []
+    },
+    {
+      "id": 2,
+      "hex": "0x02",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "protected",
+      "dispatch": []
+    },
+    {
+      "id": 3,
+      "hex": "0x03",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": true,
+      "editorAction": null,
+      "status": "protected",
+      "dispatch": []
+    },
+    {
+      "id": 4,
+      "hex": "0x04",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "protected",
+      "dispatch": []
+    },
+    {
+      "id": 5,
+      "hex": "0x05",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": []
+    },
+    {
+      "id": 6,
+      "hex": "0x06",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": []
+    },
+    {
+      "id": 7,
+      "hex": "0x07",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "protected",
+      "dispatch": []
+    },
+    {
+      "id": 8,
+      "hex": "0x08",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "protected",
+      "dispatch": []
+    },
+    {
+      "id": 9,
+      "hex": "0x09",
+      "modes": [
+        "btmusic",
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "play",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x100077a0",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x1001012a",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "hex": "0x0A",
+      "modes": [
+        "btmusic",
+        "le_call",
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": false,
+      "editorAction": "previous",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x100077ec",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x10010138",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "hex": "0x0B",
+      "modes": [
+        "btmusic",
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": false,
+      "editorAction": "next",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007802",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x10010140",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "hex": "0x0C",
+      "modes": [
+        "btmusic"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x100077ec",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x10010138",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "hex": "0x0D",
+      "modes": [
+        "btmusic"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007802",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x10010140",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "hex": "0x0E",
+      "modes": [
+        "btmusic"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x100077ec",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x10010138",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "hex": "0x0F",
+      "modes": [
+        "btmusic"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007802",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x10010140",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "hex": "0x10",
+      "modes": [
+        "btmusic",
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "volumeUp",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007814",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x10010148",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "hex": "0x11",
+      "modes": [
+        "btmusic",
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "volumeDown",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x1000781c",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x10010180",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "hex": "0x12",
+      "modes": [
+        "btmusic"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007814",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "hex": "0x13",
+      "modes": [
+        "btmusic"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x1000781c",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "hex": "0x14",
+      "modes": [
+        "btcall",
+        "le_call"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "callVolumeUp",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007dc4",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x1001020c",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "hex": "0x15",
+      "modes": [
+        "btcall",
+        "le_call"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "callVolumeDown",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007dd8",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x10010226",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "hex": "0x16",
+      "modes": [
+        "btcall",
+        "le_call"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "answer",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007ddc",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102dc",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "hex": "0x17",
+      "modes": [
+        "btcall",
+        "le_call"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "reject",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007de2",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102dc",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "hex": "0x18",
+      "modes": [
+        "btcall",
+        "le_call"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "hangup",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007de8",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102dc",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "hex": "0x19",
+      "modes": [
+        "btcall",
+        "le_call"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007dee",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102dc",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "hex": "0x1A",
+      "modes": [
+        "btcall",
+        "le_call"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007df4",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102dc",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "hex": "0x1B",
+      "modes": [
+        "btcall",
+        "le_call"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007dfa",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102dc",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "hex": "0x1C",
+      "modes": [
+        "btcall",
+        "le_call"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007e00",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102dc",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "hex": "0x1D",
+      "modes": [
+        "btcall",
+        "btmusic",
+        "le_call",
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "microphone",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007882",
+          "default_or_noop": false
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007e06",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x10010192",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "hex": "0x1E",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007db8",
+          "default_or_noop": true
+        },
+        {
+          "mode": "main",
+          "target": "0x10003a5c",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "hex": "0x1F",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": "assistantStart",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007db8",
+          "default_or_noop": true
+        },
+        {
+          "mode": "main",
+          "target": "0x10003a62",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "hex": "0x20",
+      "modes": [
+        "btcall",
+        "le_call",
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": "assistantStop",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007e0c",
+          "default_or_noop": false
+        },
+        {
+          "mode": "main",
+          "target": "0x10003a68",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102dc",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "hex": "0x21",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007db8",
+          "default_or_noop": true
+        },
+        {
+          "mode": "main",
+          "target": "0x10003a58",
+          "default_or_noop": true
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "hex": "0x22",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007db8",
+          "default_or_noop": true
+        },
+        {
+          "mode": "main",
+          "target": "0x10003a58",
+          "default_or_noop": true
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "hex": "0x23",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": true,
+      "editorAction": null,
+      "status": "protected",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007db8",
+          "default_or_noop": true
+        },
+        {
+          "mode": "main",
+          "target": "0x10003aae",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "hex": "0x24",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "protected",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007db8",
+          "default_or_noop": true
+        },
+        {
+          "mode": "main",
+          "target": "0x10003ac4",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "hex": "0x25",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "restricted-language",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007db8",
+          "default_or_noop": true
+        },
+        {
+          "mode": "main",
+          "target": "0x10003ac8",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "hex": "0x26",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "restricted-language",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007db8",
+          "default_or_noop": true
+        },
+        {
+          "mode": "main",
+          "target": "0x10003ac8",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "hex": "0x27",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "restricted-language",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007794",
+          "default_or_noop": true
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007db8",
+          "default_or_noop": true
+        },
+        {
+          "mode": "main",
+          "target": "0x10003ac8",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "hex": "0x2C",
+      "modes": [
+        "btcall",
+        "btmusic",
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "rgb",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "btmusic",
+          "target": "0x10007888",
+          "default_or_noop": false
+        },
+        {
+          "mode": "btcall",
+          "target": "0x10007e18",
+          "default_or_noop": false
+        },
+        {
+          "mode": "main",
+          "target": "0x10003a58",
+          "default_or_noop": true
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102a6",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "hex": "0x31",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "main",
+          "target": "0x10003af8",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "hex": "0x32",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "main",
+          "target": "0x10003ace",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "hex": "0x33",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "main",
+          "target": "0x10003a58",
+          "default_or_noop": true
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "hex": "0x34",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "main",
+          "target": "0x10003a58",
+          "default_or_noop": true
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "hex": "0x35",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "main",
+          "target": "0x10003a58",
+          "default_or_noop": true
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "hex": "0x36",
+      "modes": [
+        "btmusic",
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "soundMode",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "main",
+          "target": "0x10003a58",
+          "default_or_noop": true
+        },
+        {
+          "mode": "usound",
+          "target": "0x1001019a",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "hex": "0x37",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "main",
+          "target": "0x10003a58",
+          "default_or_noop": true
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "hex": "0x38",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": true,
+      "editorAction": "connection",
+      "status": "selectable-experimental",
+      "dispatch": [
+        {
+          "mode": "main",
+          "target": "0x10003afe",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "hex": "0x39",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "main",
+          "target": "0x10003a58",
+          "default_or_noop": true
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "hex": "0x3A",
+      "modes": [
+        "main"
+      ],
+      "factoryAssigned": true,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "main",
+          "target": "0x10003c3c",
+          "default_or_noop": false
+        },
+        {
+          "mode": "usound",
+          "target": "0x100102ce",
+          "default_or_noop": true
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "hex": "0x3B",
+      "modes": [
+        "btcall",
+        "le_call",
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "usound",
+          "target": "0x100101fa",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "hex": "0x3D",
+      "modes": [
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "usound",
+          "target": "0x10010238",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "hex": "0x3E",
+      "modes": [
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "usound",
+          "target": "0x10010252",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "hex": "0x3F",
+      "modes": [
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "usound",
+          "target": "0x1001026c",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "hex": "0x40",
+      "modes": [
+        "le_media",
+        "usound"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": [
+        {
+          "mode": "usound",
+          "target": "0x1001028e",
+          "default_or_noop": false
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "hex": "0x43",
+      "modes": [
+        "btmusic"
+      ],
+      "factoryAssigned": false,
+      "editorAction": null,
+      "status": "registered-only",
+      "dispatch": []
+    }
+  ]
+}

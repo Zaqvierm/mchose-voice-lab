@@ -34,6 +34,7 @@ const state = {
   audioFile: null,
   baseFile: null,
   bindingEdits: [],
+  bindingSelection: { button: "g", event: "single" },
   messageKey: "ready",
   messageKind: "",
 };
@@ -82,8 +83,11 @@ function controls() {
       (supportsBindings(state.factory) && state.bindingEdits.length)
     );
   document
-    .querySelectorAll("#bindings-table select")
+    .querySelectorAll("#bindings-table select, #bindings-table button")
     .forEach((e) => (e.disabled = state.busy));
+  if ($("binding-action"))
+    $("binding-action").disabled =
+      state.busy || state.bindingSelection.button === "power";
   $("download").disabled = state.busy || !state.built;
 }
 function coreErrorKey(error) {
@@ -341,62 +345,161 @@ function renderBindings() {
     n.textContent = value;
     return n;
   };
-  const head = document.createElement("tr");
-  ["bindingsButton", "bindingsGesture", "bindingsAction"].forEach((k) =>
-    head.append(node("th", t(k))),
+  const { button, event } = state.bindingSelection;
+  const buttonLabel = (b) =>
+    t({ g: "bindingG", mic: "bindingMic", power: "bindingPower" }[b]);
+  const gestureLabel = (b, e) =>
+    t("gesture_" + e) +
+    (e === "hold"
+      ? b === "g"
+        ? " · ~2 s"
+        : b === "mic"
+          ? " · ~1.5 s"
+          : " · ~3 s"
+      : "");
+  const select = (id, label) => {
+    const wrap = node("label", label),
+      s = document.createElement("select");
+    s.id = id;
+    s.setAttribute("aria-label", label);
+    wrap.append(s);
+    return { wrap, s };
+  };
+  const option = (s, value, label) => {
+    const o = node("option", label);
+    o.value = value;
+    s.append(o);
+  };
+  const layout = node("div", "");
+  layout.className = "binding-picker";
+  const left = node("div", "");
+  left.className = "binding-steps";
+  const keys = select("binding-button", t("bindingsStepButton"));
+  for (const b of ["g", "mic", "power"]) option(keys.s, b, buttonLabel(b));
+  keys.s.value = button;
+  keys.s.onchange = () => {
+    state.bindingSelection.button = keys.s.value;
+    renderBindings();
+    controls();
+  };
+  const events = select("binding-gesture", t("bindingsStepGesture"));
+  for (const e of Object.keys(BINDING_EVENTS))
+    option(events.s, e, gestureLabel(button, e));
+  events.s.value = event;
+  events.s.onchange = () => {
+    state.bindingSelection.event = events.s.value;
+    renderBindings();
+    controls();
+  };
+  left.append(keys.wrap, events.wrap, node("p", t("bindingsSelectionHint")));
+  const right = node("div", "");
+  right.className = "binding-actions";
+  const factory =
+    {
+      g: { single: "play", double: "connection", hold: "soundMode" },
+      mic: { single: "microphone", double: "calls", hold: "reject" },
+      power: { single: "rgb", hold: "power", five: "service" },
+    }[button][event] || "none";
+  const factoryNote = node(
+    "p",
+    t("bindingFactory") + " — " + t("bindAction_" + factory),
   );
-  table.append(head);
-  const locked = document.createElement("tr");
-  [
-    t("bindingPower"),
-    t("bindingPowerGestures"),
-    t("bindingPowerLocked"),
-  ].forEach((v) => locked.append(node("td", v)));
-  table.append(locked);
-  for (const button of ["g", "mic"])
-    for (const event of Object.keys(BINDING_EVENTS)) {
-      const row = document.createElement("tr");
-      row.append(node("td", t(button === "g" ? "bindingG" : "bindingMic")));
-      const gesture =
-        t("gesture_" + event) +
-        (event === "hold" ? (button === "g" ? " · ~2 s" : " · ~1.5 s") : "");
-      row.append(node("td", gesture));
-      const cell = document.createElement("td"),
-        select = document.createElement("select");
-      select.setAttribute(
-        "aria-label",
-        t(button === "g" ? "bindingG" : "bindingMic") + " / " + gesture,
-      );
-      const factory =
-        {
-          g: { single: "play", double: "connection", hold: "soundMode" },
-          mic: { single: "microphone", double: "calls", hold: "reject" },
-        }[button][event] || "none";
-      const option = (value, label) => {
-        const o = node("option", label);
-        o.value = value;
-        select.append(o);
-      };
-      option("", t("bindingFactory") + " — " + t("bindAction_" + factory));
-      for (const action of Object.keys(BINDING_ACTIONS))
-        option(action, t("bindAction_" + action));
-      select.value =
-        state.bindingEdits.find((e) => e.button === button && e.event === event)
-          ?.action || "";
-      select.onchange = () => {
-        state.bindingEdits = state.bindingEdits.filter(
-          (e) => !(e.button === button && e.event === event),
-        );
-        if (select.value)
-          state.bindingEdits.push({ button, event, action: select.value });
-        resetBuild();
-        controls();
-      };
-      select.disabled = state.busy;
-      cell.append(select);
-      row.append(cell);
-      table.append(row);
-    }
+  factoryNote.id = "binding-factory";
+  const actions = select("binding-action", t("bindingsStepAction"));
+  actions.s.size = 10;
+  option(
+    actions.s,
+    "",
+    t("bindingFactory") + " — " + t("bindAction_" + factory),
+  );
+  for (const action of Object.keys(BINDING_ACTIONS))
+    option(actions.s, action, t("bindAction_" + action));
+  actions.s.value =
+    state.bindingEdits.find((e) => e.button === button && e.event === event)
+      ?.action || "";
+  const chosen = actions.s.value;
+  const scope = [
+    "answer",
+    "reject",
+    "hangup",
+    "callVolumeUp",
+    "callVolumeDown",
+  ].includes(chosen)
+    ? "bindingsScopeCall"
+    : chosen.startsWith("assistant")
+      ? "bindingsScopeAssistant"
+      : ["play", "previous", "next"].includes(chosen)
+        ? "bindingsScopeMedia"
+        : ["volumeUp", "volumeDown"].includes(chosen)
+          ? "bindingsScopeVolume"
+          : "bindingsScopeLocal";
+  const note = node(
+    "p",
+    button === "power"
+      ? t("bindingPowerLocked")
+      : chosen
+        ? t(scope)
+        : t("bindingsFactoryHint"),
+  );
+  note.className = "fine";
+  note.id = "binding-action-info";
+  actions.s.disabled = state.busy || button === "power";
+  actions.s.onchange = () => {
+    if (state.busy || button === "power") return;
+    const value = actions.s.value;
+    state.bindingEdits = state.bindingEdits.filter(
+      (e) => !(e.button === button && e.event === event),
+    );
+    if (value) state.bindingEdits.push({ button, event, action: value });
+    resetBuild();
+    renderBindings();
+    controls();
+    $("binding-action").focus();
+  };
+  right.append(factoryNote, actions.wrap, note);
+  layout.append(left, right);
+  table.append(layout);
+  const applied = node("div", "");
+  applied.className = "binding-edits";
+  applied.append(node("h4", t("bindingsEdits")));
+  if (!state.bindingEdits.length)
+    applied.append(node("p", t("bindingsNoEdits")));
+  for (const edit of state.bindingEdits) {
+    const row = node("div", "");
+    row.className = "binding-edit-row";
+    row.append(
+      node(
+        "span",
+        buttonLabel(edit.button) +
+          " · " +
+          gestureLabel(edit.button, edit.event) +
+          " → " +
+          t("bindAction_" + edit.action),
+      ),
+    );
+    const remove = node("button", t("bindingsRestore"));
+    remove.type = "button";
+    remove.className = "text-button";
+    remove.setAttribute(
+      "aria-label",
+      t("bindingsRestore") +
+        " / " +
+        buttonLabel(edit.button) +
+        " / " +
+        gestureLabel(edit.button, edit.event),
+    );
+    remove.onclick = () => {
+      if (state.busy) return;
+      state.bindingEdits = state.bindingEdits.filter((e) => e !== edit);
+      resetBuild();
+      renderBindings();
+      controls();
+    };
+    row.append(remove);
+    applied.append(row);
+  }
+  table.append(applied);
+  keys.s.disabled = events.s.disabled = state.busy;
 }
 function applyLanguage(value) {
   setLanguage(value);
@@ -447,6 +550,7 @@ function applyLanguage(value) {
 async function readBaseBytes(bytes, name) {
   state.factory = null;
   state.bindingEdits = [];
+  state.bindingSelection = { button: "g", event: "single" };
   renderBindings();
   resetBuild();
   resetOriginal();

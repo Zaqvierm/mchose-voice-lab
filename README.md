@@ -12,6 +12,7 @@ MCHOSE voice prompt editing and firmware audio research: AAC/ACT in the browser,
 - Inspect actual sound resources and preview the selected factory recording.
 - Trim audio, encode AAC-LC, package ACT and download a rebuilt image.
 - Create experimental custom button bindings on X9 EN 1003: G / Mic, single through five clicks and existing holds. Power is locked in the builder.
+- Three-step button editor with 16 native actions, including track skipping, call controls and voice-assistant requests. [56-ID registration audit](docs/key-command-inventory.md); unverified/service IDs remain restricted.
 - Audio-only builds preserve the application payload; binding builds change only its key configuration, preserving executable instructions, bootloader, partition parameters and other resources.
 
 See [button-table research and instructions](docs/bindings.en.md). Custom bindings have software validation only; function labels are correlated with the official manual. Hold timing and pairing combinations are not editable.

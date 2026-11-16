@@ -10,6 +10,7 @@ import {
   buildBindings,
   unpackBindingApp,
   supportsBindings,
+  BINDING_ACTIONS,
 } from "../src/bindings.mjs";
 import { openFactory, parseImage, sameBytes } from "../src/firmware.mjs";
 const codec = {};
@@ -52,6 +53,8 @@ test("binding planner preserves Power and rejects unavailable/duplicate gestures
     { button: "power", event: "single", action: "play" },
     { button: "g", event: "single", action: "power" },
     { button: "mic", event: "seven", action: "play" },
+    { button: "toString", event: "single", action: "play" },
+    { button: "g", event: "constructor", action: "play" },
   ])
     assert.throws(() => planBindings(t, [change]));
   assert.throws(() =>
@@ -64,9 +67,49 @@ test("binding planner preserves Power and rejects unavailable/duplicate gestures
   noPower[0] = 0;
   assert.throws(() => planBindings(noPower, []), /Power/);
 });
+
+test("hidden actions use the immutable defaults without restoring old gestures", () => {
+  const merged = table(),
+    defaults = table();
+  defaults.set([0x0b, 5, 3, 0, 0, 64], 30);
+  assert.throws(() =>
+    planBindings(merged, [{ button: "g", event: "triple", action: "next" }]),
+  );
+  const edited = planBindings(
+    merged,
+    [{ button: "g", event: "triple", action: "next" }],
+    { offset: 2, size: 231 },
+    defaults,
+  );
+  assert(
+    edited.some(
+      (v, i) =>
+        i % 6 === 0 &&
+        v === 0x0b &&
+        edited[i + 1] === 7 &&
+        edited[i + 4] === 16,
+    ),
+  );
+  assert.deepEqual(edited.slice(0, 6), merged.slice(0, 6));
+  assert(
+    !edited.some((v, i) => i % 6 === 0 && v === 0x0b && edited[i + 1] === 5),
+  );
+});
 test("CFG parser rejects malformed directory and size", () => {
   assert.throws(() => configRecords(new Uint8Array(16)));
   assert.equal(supportsBindings({ profile: { id: "v9pro-1015" } }), false);
+});
+
+test('published command registry and all three action dictionaries agree with the builder',async()=>{
+  const registry=JSON.parse(await readFile(new URL('../public/key-commands.json',import.meta.url),'utf8'));
+  assert.equal(registry.commands.length,56);assert.equal(new Set(registry.commands.map(c=>c.id)).size,56);
+  assert.equal(registry.commands.filter(c=>!c.factoryAssigned).length,40);
+  const choices=registry.commands.filter(c=>c.editorAction);
+  assert.equal(choices.length,16);
+  for(const c of choices)assert.equal(BINDING_ACTIONS[c.editorAction],c.id);
+  assert.equal(registry.commands.find(c=>c.id===1).status,'protected');
+  const {setLanguage,t}=await import('../src/i18n.mjs');
+  for(const language of ['ru','en','zh']){setLanguage(language);for(const action of Object.keys(BINDING_ACTIONS))assert.notEqual(t('bindAction_'+action),'bindAction_'+action)}
 });
 test("browser worker speaks the documented postMessage protocol", async () => {
   const script = await readFile(
@@ -116,9 +159,42 @@ test(
       f = await openFactory(bytes);
     const noop = await buildBindings(f, [], codec);
     assert(sameBytes(noop.image, bytes));
+    const factoryRaw = await unpackBindingApp(
+      parseImage(bytes).entries.find((e) => e.name === "app.bin").bytes,
+      codec,
+    );
+    const { parseSdfs } = await import("../src/firmware.mjs");
+    const cfg = parseSdfs(factoryRaw.raw.slice(0xbb774, 0xbb774 + 327552));
+    const defaults = configRecords(
+      cfg.find((e) => e.name === "defcfg.bin").bytes,
+    ).find((r) => r.id === 12).bytes;
+    const user = configRecords(
+      cfg.find((e) => e.name === "usrcfg.bin").bytes,
+    ).find((r) => r.id === 12);
+    const merged = defaults.slice();
+    merged.set(user.bytes, user.offset);
+    for (const action of Object.keys(BINDING_ACTIONS)) {
+      const planned = planBindings(
+        merged,
+        [{ button: "g", event: "triple", action }],
+        user,
+        defaults,
+      );
+      assert.deepEqual(planned.slice(0, 6), merged.slice(0, 6));
+      assert(
+        planned.some(
+          (v, i) =>
+            i % 6 === 0 &&
+            v === BINDING_ACTIONS[action] &&
+            planned[i + 1] === 7 &&
+            planned[i + 4] === 16,
+        ),
+        action,
+      );
+    }
     const edits = [
-      { button: "g", event: "triple", action: "connection" },
-      { button: "mic", event: "five", action: "play" },
+      { button: "g", event: "triple", action: "next" },
+      { button: "mic", event: "five", action: "previous" },
     ];
     const result = await buildBindings(f, edits, codec);
     assert(!sameBytes(result.image, bytes));
