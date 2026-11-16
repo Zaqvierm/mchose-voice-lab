@@ -16,7 +16,8 @@ const messages = {
     stockDownload: "Скачать оригинал",
     compatibility: "Модели и возможности",
     offlineTools: "Офлайн-сборка: экспериментальные профили",
-    originalOnly: "В браузере доступно скачивание оригинала. Экспериментальная офлайн-сборка — по инструкции.",
+    originalOnly:
+      "В браузере доступно скачивание оригинала. Экспериментальная офлайн-сборка — по инструкции.",
     stockSaved: "Оригинал проверен. Файл передан браузеру для сохранения.",
     pickBase: "Выбрать .bin",
     baseHint: "Используйте оригинальный, немодифицированный образ.",
@@ -123,8 +124,10 @@ const messages = {
     stockDownload: "Download original",
     compatibility: "Models and capabilities",
     offlineTools: "Offline tools: experimental profiles",
-    originalOnly: "The browser offers original downloads. Experimental offline rebuilding is documented separately.",
-    stockSaved: "Original verified. The file was sent to your browser for saving.",
+    originalOnly:
+      "The browser offers original downloads. Experimental offline rebuilding is documented separately.",
+    stockSaved:
+      "Original verified. The file was sent to your browser for saving.",
     pickBase: "Choose .bin",
     baseHint: "Use an original, unmodified firmware image.",
     catalogLoading: "Loading catalog…",
@@ -438,4 +441,119 @@ Object.assign(messages.zh, {
   pageTitle: "MCHOSE V9 Pro、V9 Turbo、X9 自定义提示音 | Voice Lab",
   pageDescription:
     "为 MCHOSE V9 Pro、V9 Turbo+、V9 Turbo、X9 和 G9 Pro 制作自定义提示音。在浏览器中裁剪音频、编码 AAC/ACT 并构建固件。",
+});
+
+Object.assign(messages.ru, {
+  bindingsTitle: "Кнопки · экспериментальный редактор",
+  bindingsUnavailable:
+    "Настройка кнопок доступна только для оригинальной X9 EN 1003. Загрузите её выше. Озвучка других поддерживаемых моделей редактируется как раньше.",
+  bindingsScope:
+    "Назначьте действия для G и Mic. Можно собрать только бинды или добавить их к выбранному звуку. Новые бинды пока не проверены на наушниках; названия функций сопоставлены с официальной инструкцией.",
+  bindingsPowerNotice:
+    "Power полностью защищена. Заводские записи питания, комбинация сопряжения и настройки таймеров сохраняются и повторно проверяются в собранном файле.",
+  bindingsTiming:
+    "Время удержаний остаётся заводским. Для 3–5 кликов поддержка найдена в программе, но задержки и поведение новых назначений требуют проверки на устройстве.",
+  bindingsResearch: "Разбор таблицы кнопок и ограничения",
+  bindingsButton: "Кнопка",
+  bindingsGesture: "Нажатие",
+  bindingsAction: "Что делает",
+  bindingPower: "Power 🔒",
+  bindingPowerGestures: "Все штатные жесты",
+  bindingPowerLocked: "Заводское управление · изменение запрещено",
+  bindingG: "G / Mode",
+  bindingMic: "Mic",
+  bindingFactory: "Заводское",
+  gesture_single: "Одно",
+  gesture_double: "Два",
+  gesture_triple: "Три",
+  gesture_four: "Четыре",
+  gesture_five: "Пять",
+  gesture_hold: "Удержание",
+  bindAction_play: "Воспроизведение / пауза",
+  bindAction_connection: "Смена подключения",
+  bindAction_soundMode: "Game 1 / Game 2 / Music",
+  bindAction_microphone: "Микрофон вкл. / выкл.",
+  bindAction_calls: "Ответ / завершение звонка",
+  bindAction_reject: "Отклонение звонка",
+  bindAction_none: "Без отдельного назначения",
+  bindingsProtected:
+    "Питание и сопряжение сохранены. Исполняемый код, загрузчик и параметры разделов не изменены.",
+  bindingsResources:
+    "Изменена только таблица кнопок внутри приложения и, если выбран, звуковой ресурс. Проверки целостности пройдены.",
+});
+Object.assign(messages.en, {
+  bindingsTitle: "Buttons · experimental editor",
+  bindingsUnavailable:
+    "Button editing requires the original X9 EN 1003 image. Load it above. Audio editing for other supported models is unchanged.",
+  bindingsScope:
+    "Assign actions to G and Mic. Build bindings alone or combine them with the selected sound. Custom bindings have no hardware validation; action names are correlated with the official manual.",
+  bindingsPowerNotice:
+    "Power is locked. Factory power bindings, the pairing combination and timing settings are retained and checked again in the rebuilt image.",
+  bindingsTiming:
+    "Hold durations remain factory-original. The program recognizes 3–5 clicks, but latency and custom behavior still require device testing.",
+  bindingsResearch: "Button-table research and limits",
+  bindingsButton: "Button",
+  bindingsGesture: "Gesture",
+  bindingsAction: "Action",
+  bindingPower: "Power 🔒",
+  bindingPowerGestures: "All factory gestures",
+  bindingPowerLocked: "Factory control · editing locked",
+  bindingG: "G / Mode",
+  bindingMic: "Mic",
+  bindingFactory: "Factory",
+  gesture_single: "Single click",
+  gesture_double: "Double click",
+  gesture_triple: "Triple click",
+  gesture_four: "Four clicks",
+  gesture_five: "Five clicks",
+  gesture_hold: "Hold",
+  bindAction_play: "Play / pause",
+  bindAction_connection: "Switch connection",
+  bindAction_soundMode: "Game 1 / Game 2 / Music",
+  bindAction_microphone: "Microphone on / off",
+  bindAction_calls: "Answer / end call",
+  bindAction_reject: "Reject call",
+  bindAction_none: "No separate assignment",
+  bindingsProtected:
+    "Power and pairing retained. Executable instructions, bootloader and partition parameters are unchanged.",
+  bindingsResources:
+    "Only the application key table and, if selected, the sound resource were edited. Integrity checks passed.",
+});
+Object.assign(messages.zh, {
+  bindingsTitle: "按键 · 实验性编辑器",
+  bindingsUnavailable:
+    "按键编辑仅支持原始 X9 英文 1003 固件，请先在上方加载。其他支持型号的提示音编辑功能不变。",
+  bindingsScope:
+    "为 G 和 Mic 分配操作。可单独构建按键固件，也可与所选提示音一起构建。自定义按键尚未经过实机验证；功能名称根据官方说明书对应。",
+  bindingsPowerNotice:
+    "电源键已锁定。保留出厂电源映射、配对组合和计时设置，并在构建结果中再次校验。",
+  bindingsTiming:
+    "长按时长保持出厂设置。程序中存在三至五击事件，但新映射的延迟及实际行为仍需实机验证。",
+  bindingsResearch: "按键表研究与限制",
+  bindingsButton: "按键",
+  bindingsGesture: "操作",
+  bindingsAction: "功能",
+  bindingPower: "电源 🔒",
+  bindingPowerGestures: "所有出厂操作",
+  bindingPowerLocked: "出厂控制 · 禁止修改",
+  bindingG: "G / 模式",
+  bindingMic: "麦克风",
+  bindingFactory: "出厂设置",
+  gesture_single: "单击",
+  gesture_double: "双击",
+  gesture_triple: "三击",
+  gesture_four: "四击",
+  gesture_five: "五击",
+  gesture_hold: "长按",
+  bindAction_play: "播放 / 暂停",
+  bindAction_connection: "切换连接模式",
+  bindAction_soundMode: "游戏 1 / 游戏 2 / 音乐",
+  bindAction_microphone: "麦克风开 / 关",
+  bindAction_calls: "接听 / 挂断",
+  bindAction_reject: "拒接电话",
+  bindAction_none: "无单独映射",
+  bindingsProtected:
+    "电源及配对功能已保留。可执行指令、引导程序和分区参数未更改。",
+  bindingsResources:
+    "仅修改了应用内的按键表，以及所选提示音资源。完整性校验已通过。",
 });

@@ -297,6 +297,17 @@
               ></button>
             </div>
           </section>
+          <section class="bindings-panel" aria-labelledby="bindings-heading">
+            <h3 id="bindings-heading" data-i18n="bindingsTitle"></h3>
+            <p id="bindings-unavailable" class="fine" data-i18n="bindingsUnavailable"></p>
+            <div id="bindings-editor" hidden>
+              <p class="fine" data-i18n="bindingsScope"></p>
+              <div class="bindings-scroll"><table id="bindings-table"></table></div>
+              <p class="fine" data-i18n="bindingsPowerNotice"></p>
+              <p class="fine" data-i18n="bindingsTiming"></p>
+            </div>
+            <a id="bindings-research" class="fine" data-i18n="bindingsResearch"></a>
+          </section>
           <div class="build-section">
             <p class="local-note" data-i18n="local"></p>
             <button
@@ -308,8 +319,8 @@
           </div>
           <div id="result" class="result" hidden>
             <h3 data-i18n="done"></h3>
-            <p data-i18n="protected"></p>
-            <p data-i18n="resourcesKept"></p>
+            <p id="result-protected" data-i18n="protected"></p>
+            <p id="result-resources" data-i18n="resourcesKept"></p>
             <p id="result-size"></p>
             <button id="download" class="primary" data-i18n="download"></button
             ><button

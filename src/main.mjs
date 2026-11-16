@@ -9,6 +9,13 @@ import {
   sameBytes,
 } from "./firmware.mjs";
 import { t, setLanguage, getLanguage, voiceLabel, locales } from "./i18n.mjs";
+import {
+  supportsBindings,
+  buildBindings,
+  BINDING_EVENTS,
+  BINDING_ACTIONS,
+} from "./bindings.mjs";
+import { createBindingCodec } from "./lzma-browser.mjs";
 const $ = (id) => document.getElementById(id);
 $("app-version").textContent = `v${appVersion}`;
 const repo = "https://github.com/Zaqvierm/mchose-voice-lab";
@@ -26,6 +33,7 @@ const state = {
   originalURL: null,
   audioFile: null,
   baseFile: null,
+  bindingEdits: [],
   messageKey: "ready",
   messageKind: "",
 };
@@ -58,7 +66,10 @@ function controls() {
     $(id).disabled = state.busy;
   $("model-select").disabled = state.busy || !state.catalog.length;
   $("firmware-language").disabled = state.busy || !state.catalog.length;
-  $("load-stock").disabled = state.busy || !selectedCatalog() || selectedCatalog().customization === "original-only";
+  $("load-stock").disabled =
+    state.busy ||
+    !selectedCatalog() ||
+    selectedCatalog().customization === "original-only";
   $("stock-download").disabled = state.busy || !selectedCatalog();
   $("voice").disabled = state.busy || !state.factory?.voices?.length;
   const voice = selectedVoice();
@@ -66,8 +77,13 @@ function controls() {
   $("build").disabled =
     state.busy ||
     !state.factory?.canBuild ||
-    !state.prepared ||
-    !voice?.replaceable;
+    !(
+      (state.prepared && voice?.replaceable) ||
+      (supportsBindings(state.factory) && state.bindingEdits.length)
+    );
+  document
+    .querySelectorAll("#bindings-table select")
+    .forEach((e) => (e.disabled = state.busy));
   $("download").disabled = state.busy || !state.built;
 }
 function coreErrorKey(error) {
@@ -295,8 +311,92 @@ function renderBase() {
 function renderResult() {
   if (!state.built) return;
   const r = state.built.report;
+  for (const [id, key] of [
+    [
+      "result-protected",
+      r.appConfigurationChanged ? "bindingsProtected" : "protected",
+    ],
+    [
+      "result-resources",
+      r.appConfigurationChanged ? "bindingsResources" : "resourcesKept",
+    ],
+  ]) {
+    $(id).dataset.i18n = key;
+    $(id).textContent = t(key);
+  }
   $("result-size").textContent =
     `${fmt(r.imageBytes)} ${t("bytes")} / ${t("available")}: ${fmt(r.capacity - r.toneBytes)} ${t("bytes")}`;
+}
+function renderBindings() {
+  const supported = supportsBindings(state.factory);
+  $("bindings-editor").hidden = !supported;
+  $("bindings-unavailable").hidden = supported;
+  $("bindings-research").href =
+    `${repo}/blob/main/docs/bindings.${getLanguage()}.md`;
+  const table = $("bindings-table");
+  table.replaceChildren();
+  if (!supported) return;
+  const node = (tag, value) => {
+    const n = document.createElement(tag);
+    n.textContent = value;
+    return n;
+  };
+  const head = document.createElement("tr");
+  ["bindingsButton", "bindingsGesture", "bindingsAction"].forEach((k) =>
+    head.append(node("th", t(k))),
+  );
+  table.append(head);
+  const locked = document.createElement("tr");
+  [
+    t("bindingPower"),
+    t("bindingPowerGestures"),
+    t("bindingPowerLocked"),
+  ].forEach((v) => locked.append(node("td", v)));
+  table.append(locked);
+  for (const button of ["g", "mic"])
+    for (const event of Object.keys(BINDING_EVENTS)) {
+      const row = document.createElement("tr");
+      row.append(node("td", t(button === "g" ? "bindingG" : "bindingMic")));
+      const gesture =
+        t("gesture_" + event) +
+        (event === "hold" ? (button === "g" ? " · ~2 s" : " · ~1.5 s") : "");
+      row.append(node("td", gesture));
+      const cell = document.createElement("td"),
+        select = document.createElement("select");
+      select.setAttribute(
+        "aria-label",
+        t(button === "g" ? "bindingG" : "bindingMic") + " / " + gesture,
+      );
+      const factory =
+        {
+          g: { single: "play", double: "connection", hold: "soundMode" },
+          mic: { single: "microphone", double: "calls", hold: "reject" },
+        }[button][event] || "none";
+      const option = (value, label) => {
+        const o = node("option", label);
+        o.value = value;
+        select.append(o);
+      };
+      option("", t("bindingFactory") + " — " + t("bindAction_" + factory));
+      for (const action of Object.keys(BINDING_ACTIONS))
+        option(action, t("bindAction_" + action));
+      select.value =
+        state.bindingEdits.find((e) => e.button === button && e.event === event)
+          ?.action || "";
+      select.onchange = () => {
+        state.bindingEdits = state.bindingEdits.filter(
+          (e) => !(e.button === button && e.event === event),
+        );
+        if (select.value)
+          state.bindingEdits.push({ button, event, action: select.value });
+        resetBuild();
+        controls();
+      };
+      select.disabled = state.busy;
+      cell.append(select);
+      row.append(cell);
+      table.append(row);
+    }
 }
 function applyLanguage(value) {
   setLanguage(value);
@@ -321,12 +421,14 @@ function applyLanguage(value) {
   $("end-slider").setAttribute("aria-label", t("end"));
   $("research-link").href = `${repo}/blob/main/docs/research.${value}.md`;
   $("instructions-link").href = `${repo}/blob/main/docs/rebuild.${value}.md`;
-  $("compatibility-link").href = `${repo}/blob/main/docs/compatibility.${value}.md`;
+  $("compatibility-link").href =
+    `${repo}/blob/main/docs/compatibility.${value}.md`;
   $("offline-tools-link").href = `${repo}/blob/main/docs/offline.${value}.md`;
   renderCatalog();
   renderVoices();
   renderBase();
   renderResult();
+  renderBindings();
   if (state.buffer) {
     const [a, b] = selection();
     $("clip-duration").textContent = `${(b - a).toFixed(2)} ${t("seconds")}`;
@@ -344,12 +446,15 @@ function applyLanguage(value) {
 }
 async function readBaseBytes(bytes, name) {
   state.factory = null;
+  state.bindingEdits = [];
+  renderBindings();
   resetBuild();
   resetOriginal();
   message("loadingBase", "busy");
   const f = await scanFirmware(bytes);
   state.factory = f;
   state.baseFile = name;
+  renderBindings();
   renderBase();
   renderVoices();
   if (f.voices.some((e) => e.name === "V_POWON.act"))
@@ -610,13 +715,27 @@ $("voice").onchange = () => {
 $("build").onclick = () =>
   action(async () => {
     if (!state.factory?.canBuild) fail("noBuild");
-    if (!state.prepared || !selectedVoice()?.replaceable) fail("needInputs");
+    const editKeys =
+      supportsBindings(state.factory) && state.bindingEdits.length > 0;
+    const editSound = state.prepared && selectedVoice()?.replaceable;
+    if (!editKeys && !editSound) fail("needInputs");
     message("building", "busy");
-    state.built = await buildFirmware(
-      state.factory,
-      $("voice").value,
-      state.prepared.act,
-    );
+    state.built = editSound
+      ? await buildFirmware(state.factory, $("voice").value, state.prepared.act)
+      : null;
+    if (editKeys) {
+      const codec = createBindingCodec();
+      try {
+        state.built = await buildBindings(
+          state.factory,
+          state.bindingEdits,
+          codec,
+          state.built,
+        );
+      } finally {
+        codec.close();
+      }
+    }
     $("result").hidden = false;
     renderResult();
     message("doneHint");
@@ -645,8 +764,10 @@ $("download-act").onclick = () => {
 $("ui-language").onchange = (e) => applyLanguage(e.target.value);
 function changedCatalog(keepVariant = false) {
   renderCatalogVariants(keepVariant ? $("firmware-language").value : "");
+  state.bindingEdits = [];
   if (state.factory) {
     state.factory = null;
+    renderBindings();
     state.baseFile = null;
     resetBuild();
     resetOriginal();
@@ -662,13 +783,19 @@ $("stock-download").onclick = () =>
     const e = selectedCatalog();
     if (!e) fail("catalogError");
     message("loadingBase", "busy");
-    const response = await fetch(new URL(`firmware/${e.id}.bin`, document.baseURI));
+    const response = await fetch(
+      new URL(`firmware/${e.id}.bin`, document.baseURI),
+    );
     if (!response.ok) fail("catalogError");
     const data = new Uint8Array(await response.arrayBuffer());
     if (data.length !== e.bytes) fail("badChecksum");
-    const digest = e.customization === "original-only"
-      ? Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", data)), b => b.toString(16).padStart(2,"0")).join("")
-      : (await scanFirmware(data)).digest;
+    const digest =
+      e.customization === "original-only"
+        ? Array.from(
+            new Uint8Array(await crypto.subtle.digest("SHA-256", data)),
+            (b) => b.toString(16).padStart(2, "0"),
+          ).join("")
+        : (await scanFirmware(data)).digest;
     if (digest !== e.sha256) fail("badChecksum");
     const model = e.model.replace(/[^A-Za-z0-9+_-]+/g, "-");
     download(data, `${model}-${e.language}-${e.version}-ORIGINAL.bin`);

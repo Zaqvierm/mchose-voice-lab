@@ -1,5 +1,7 @@
 # MCHOSE X9 ACT resource format
 
+Follow-up: [X9 key-table research and experimental custom bindings](bindings.en.md). Button builds modify application configuration; audio-only builds retain the complete application payload.
+
 [Русский](research.ru.md) · English · [简体中文](research.zh.md)
 
 ## Result and scope

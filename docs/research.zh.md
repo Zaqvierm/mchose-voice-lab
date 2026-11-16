@@ -72,3 +72,7 @@ P[2*i+1] = C[2*i]   XOR 0x14
 ## 更多无线固件格式
 
 [SBC/LZMA: V9 Pro 2, R9 · WTS/JLFS: G9 V2](wireless.zh.md) · [CLI](offline.zh.md) · [型号](compatibility.zh.md)
+
+## 后续研究：按键控制
+
+[X9 按键表与实验性自定义操作](bindings.zh.md)。按键构建会修改应用配置；仅编辑提示音时仍保留完整应用。

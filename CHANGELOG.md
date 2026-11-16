@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0 — 2026-11-16
+
+- Added experimental browser-local G / Mic button assignments for the exact X9 EN 1003 original; standalone or combined with audio editing.
+- Locked all Power bindings and retained factory pairing combinations and timing configuration in the builder, with final-image decompression and verification.
+- Added bounded LZMA chunk rebuilding, application SDFS/CFG validation and checks that executable instructions and unrelated resources are unchanged.
+- Added Russian, English and Chinese button-table research and scope disclosures. Custom bindings are software-validated only; no headset was flashed.
+- Updated the Vite development dependency to 6.4.6 and pinned the MIT LZMA-JS dependency.
+
 ## 1.1.0 — 2026-11-14
 
 - Expanded the verified original catalog to 13 images across 8 wireless models; added editable V9 Turbo+ 0035.

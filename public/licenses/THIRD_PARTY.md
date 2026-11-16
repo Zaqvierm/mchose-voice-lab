@@ -6,7 +6,10 @@ The project author's MIT license covers this repository's original source and do
 |---|---|---|---|
 | @ffmpeg/ffmpeg browser wrapper | 0.12.15 | MIT | https://github.com/ffmpegwasm/ffmpeg.wasm |
 | @ffmpeg/core single-thread WebAssembly build | 0.12.10 | GPL-2.0-or-later | https://github.com/ffmpegwasm/ffmpeg.wasm |
-| Vite (build tool) | 6.4.1 | MIT | https://github.com/vitejs/vite |
+| Vite (build tool) | 6.4.6 | MIT | https://github.com/vitejs/vite |
+| LZMA-JS (browser worker and test codec) | 2.3.2 | MIT | https://github.com/LZMA-JS/LZMA-JS |
+
+The unminified upstream LZMA worker is used because the npm package's minified worker changes its public message-property names. Its license is included in [licenses/lzma-MIT.txt](licenses/lzma-MIT.txt), also copied to the website license directory. It is used only on the exact SHA256-pinned X9 application. No modified executable instructions or vendor SDK tools are distributed with the editor.
 
 The FFmpeg core is retrieved from the pinned npm package. Its upstream source, component versions and build scripts are available in the [ffmpeg.wasm project](https://github.com/ffmpegwasm/ffmpeg.wasm); the underlying multimedia project is [FFmpeg](https://ffmpeg.org/). The published core has a different license from the MIT wrapper. A copy of GPLv2 is provided in [licenses/FFmpeg-GPLv2.txt](licenses/FFmpeg-GPLv2.txt). Package provenance is recorded in `package-lock.json`.
 

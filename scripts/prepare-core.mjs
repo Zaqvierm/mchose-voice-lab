@@ -8,6 +8,7 @@ for (const name of ["ffmpeg-core.js", "ffmpeg-core.wasm"]) {
 }
 
 await mkdir("public/licenses", { recursive: true });
+await copyFile('node_modules/lzma/LICENSE', 'public/licenses/lzma-MIT.txt');
 for (const name of ["FFmpeg-GPLv2.txt", "ffmpeg-wasm-MIT.txt"])
   await copyFile(`licenses/${name}`, `public/licenses/${name}`);
 await copyFile("THIRD_PARTY.md", "public/licenses/THIRD_PARTY.md");

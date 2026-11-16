@@ -1,5 +1,11 @@
 # Validation record
 
+## Experimental X9 button bindings — 2026-11-16
+
+Exact X9 EN 1003 only. The builder reopens the SHA256-pinned original, overlays CFG records at their declared offsets, retains Power records and verifies the final decompressed application against the intended configuration. No-op output is byte-identical. Test builds preserve executable instructions, bootloader, parameter map, pairing configuration and other application resources. Custom bindings have no hardware proof; action labels are correlated with the official manual. See [button research](bindings.en.md).
+
+The local browser built and downloaded an image assigning G triple-click to connection switching, without an audio upload. An independent Python decoder verified AOTA CRCs, application LZMA/header sums, application SDFS checksums, the intended key record, unchanged executable instructions and all other application resources, and preserved Power/pairing settings. The output was 743,936 bytes, SHA256 `872947cdcc0ccd3a7d52ac8acf4905a280eef71fef16249a24bdc7b19a840d8c`. This file was not flashed. Russian/English/Chinese UI switching retained the selected assignment. Browser screenshot capture was unavailable; these are UI-state and downloaded-artifact checks, not visual-layout proof.
+
 2026-11-13. Evidence is separated by scope.
 
 ## Hardware

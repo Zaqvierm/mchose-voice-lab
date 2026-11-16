@@ -686,3 +686,8 @@ footer p {
     font-size: 9px;
   }
 }
+ .bindings-panel { margin-top:24px; padding-top:20px; border-top:1px solid var(--line, #ddd); }
+ .bindings-scroll { overflow-x:auto; }
+ #bindings-table { width:100%; border-collapse:collapse; font-size:13px; }
+ #bindings-table th, #bindings-table td { padding:9px 7px; text-align:left; border-bottom:1px solid var(--line, #ddd); }
+ #bindings-table select { max-width:100%; width:100%; min-width:200px; }
