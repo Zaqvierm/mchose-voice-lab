@@ -1,6 +1,6 @@
-// X9 EN 1003 only. Configuration edits, never instruction patches.
+// Profile-specific configuration edits. Never patch executable instructions.
 import {
-  openFactory,
+  openEditable,
   parseImage,
   parseSdfs,
   transform,
@@ -9,6 +9,7 @@ import {
   sum32,
   crc32,
 } from "./firmware.mjs";
+import { IMAGE_IDENTITIES } from "./image-identities.mjs";
 const need = (ok, message) => {
   if (!ok) throw new Error(message);
 };
@@ -18,10 +19,7 @@ const put = (a, p, v) => dv(a).setUint32(p, v >>> 0, true);
 const align = (n, a) => Math.ceil(n / a) * a;
 const text = new TextDecoder(),
   enc = new TextEncoder();
-const FS = 0xbb774,
-  FS_SIZE = 327552,
-  RAW_SHA = "4538318bfe55538caf702ad7e83de03a74160914a466bdfb96c65334e17a5338";
-export const BINDING_BUTTONS = Object.freeze({ g: 7, mic: 9 });
+export const BINDING_BUTTONS = Object.freeze({ g: 7, mic: 9, power: 11 });
 export const BINDING_EVENTS = Object.freeze({
   single: 0x400,
   double: 0x4000,
@@ -48,7 +46,32 @@ export const BINDING_ACTIONS = Object.freeze({
   soundMode: 0x36,
   microphone: 0x1d,
 });
-export const supportsBindings = (f) => f?.profile?.id === "x9-1003";
+export const bindingIdentity = (f) =>
+  IMAGE_IDENTITIES.find((p) => p.id === f?.profile?.id);
+export const supportsBindings = (f) => Boolean(bindingIdentity(f));
+export const bindingButtons = (f) => bindingIdentity(f)?.buttons || {};
+export const bindingActions = (f) => bindingIdentity(f)?.actions || {};
+export function gestureActions(f, button, event, stock = false) {
+  const meta = bindingIdentity(f);
+  if (!meta) return [];
+  const rows = stock ? meta.stockRows : f.bindingRows || meta.stockRows,
+    key = meta.buttons[button];
+  const values = rows.filter(
+    (r) =>
+      r[0] &&
+      r[0] !== 0x3a &&
+      r[1] === key &&
+      (button === "power" && event === "hold"
+        ? r[0] === 1
+        : (r[4] | (r[5] << 8)) === BINDING_EVENTS[event]),
+  );
+  return values.map((r) =>
+    r[0] === 1
+      ? "power"
+      : Object.keys(meta.actions).find((k) => meta.actions[k] === r[0]) ||
+        "service",
+  );
+}
 
 export function configRecords(bytes) {
   need(
@@ -78,8 +101,8 @@ export function configRecords(bytes) {
   need(pos === bytes.length, "CFG trailing data");
   return records;
 }
-function tableInfo(raw) {
-  const fs = raw.slice(FS, FS + FS_SIZE),
+function tableInfo(raw, meta) {
+  const fs = raw.slice(meta.fsOffset, meta.fsOffset + meta.fsSize),
     resources = parseSdfs(fs);
   const defaults = resources.find((e) => e.name === "defcfg.bin"),
     user = resources.find((e) => e.name === "usrcfg.bin");
@@ -91,8 +114,9 @@ function tableInfo(raw) {
       d[0].offset === 0 &&
       d[0].size === 240 &&
       u.length === 1 &&
-      u[0].offset === 2 &&
-      u[0].size === 231,
+      u[0].offset === meta.userPatch.offset &&
+      u[0].size === meta.userPatch.size &&
+      u[0].pos === meta.userPatch.pos,
     "Unknown key table layout",
   );
   const merged = d[0].bytes.slice();
@@ -104,6 +128,7 @@ export function planBindings(
   changes,
   patch = { offset: 2, size: 231 },
   defaults = table,
+  policy = { buttons: BINDING_BUTTONS, actions: BINDING_ACTIONS, stock: table },
 ) {
   need(
     table.length === 240 && Array.isArray(changes) && changes.length <= 12,
@@ -113,15 +138,23 @@ export function planBindings(
     seen = new Set();
   for (const change of changes) {
     need(
-      Object.hasOwn(BINDING_BUTTONS, change.button) &&
+      Object.hasOwn(policy.buttons, change.button) &&
         Object.hasOwn(BINDING_EVENTS, change.event) &&
-        Object.hasOwn(BINDING_ACTIONS, change.action),
+        (change.action === "factory" ||
+          Object.hasOwn(policy.actions, change.action)),
       "Unsupported button, event or action",
     );
-    const key = BINDING_BUTTONS[change.button],
+    const key = policy.buttons[change.button],
       event = BINDING_EVENTS[change.event],
-      action = BINDING_ACTIONS[change.action];
-    need(key && event && action, "Unsupported button, event or action");
+      action = policy.actions[change.action];
+    need(
+      key && event && (action || change.action === "factory"),
+      "Unsupported button, event or action",
+    );
+    need(
+      !(key === policy.buttons.power && change.event === "hold"),
+      "Protected Power hold",
+    );
     const pair = key + ":" + event;
     need(!seen.has(pair), "Duplicate key gesture");
     seen.add(pair);
@@ -129,7 +162,36 @@ export function planBindings(
     const source = Array.from({ length: 80 }, (_, i) =>
       (i < 40 ? table : defaults).slice((i % 40) * 6, (i % 40) * 6 + 6),
     ).find((r) => r[0] === action);
-    need(source, "Unknown factory action");
+    let sources;
+    if (change.action === "factory") {
+      sources = Array.from({ length: 40 }, (_, i) =>
+        policy.stock.slice(i * 6, i * 6 + 6),
+      ).filter(
+        (r) =>
+          r[0] &&
+          r[0] !== 0x3a &&
+          r[1] === key &&
+          dv(r).getUint16(4, true) === event,
+      );
+      const current = Array.from({ length: 40 }, (_, i) =>
+        out.slice(i * 6, i * 6 + 6),
+      ).filter(
+        (r) =>
+          r[0] &&
+          r[0] !== 0x3a &&
+          r[1] === key &&
+          dv(r).getUint16(4, true) === event,
+      );
+      const signature = (rows) =>
+        rows
+          .map((r) => Array.from(r).join(","))
+          .sort()
+          .join(";");
+      if (signature(current) === signature(sources)) continue;
+    } else {
+      need(source, "Unknown factory action");
+      sources = [source];
+    }
     // Retain common 0x3a hooks. Replace only the explicit action for this gesture.
     for (let i = 0; i < 240; i += 6)
       if (
@@ -139,24 +201,25 @@ export function planBindings(
         dv(out).getUint16(i + 4, true) === event
       )
         out[i] = 0;
-    let slot = -1;
-    for (let i = 0; i < 240; i += 6)
-      if (!out[i] && i >= patch.offset && i + 6 <= patch.offset + patch.size) {
-        slot = i;
-        break;
-      }
-    need(slot >= 0, "No editable key slots");
-    out.set(source, slot);
-    out[slot + 1] = key;
-    dv(out).setUint16(slot + 4, event, true);
+    for (const template of sources) {
+      let slot = -1;
+      for (let i = 0; i < 240; i += 6)
+        if (
+          !out[i] &&
+          i >= patch.offset &&
+          i + 6 <= patch.offset + patch.size
+        ) {
+          slot = i;
+          break;
+        }
+      need(slot >= 0, "No editable key slots");
+      out.set(template, slot);
+      out[slot + 1] = key;
+      dv(out).setUint16(slot + 4, event, true);
+    }
   }
   for (let i = 0; i < 240; i += 6) {
-    if (
-      table[i + 1] === 11 ||
-      out[i + 1] === 11 ||
-      table[i] === 1 ||
-      out[i] === 1
-    )
+    if (table[i] === 1 || out[i] === 1 || table[i] === 0x3a || out[i] === 0x3a)
       need(
         sameBytes(table.subarray(i, i + 6), out.subarray(i, i + 6)),
         "Protected Power binding changed",
@@ -169,13 +232,17 @@ export function planBindings(
   }
   need(
     Array.from({ length: 40 }, (_, i) => i * 6).some(
-      (i) => out[i] === 1 && out[i + 1] === 11,
+      (i) => out[i] === 1 && out[i + 1] === policy.buttons.power,
     ),
     "Missing Power action",
   );
   return out;
 }
-export async function unpackBindingApp(encrypted, codec) {
+export async function unpackBindingApp(
+  encrypted,
+  codec,
+  meta = IMAGE_IDENTITIES.find((p) => p.id === "x9-1003"),
+) {
   const data = transform(encrypted);
   need(
     text.decode(data.subarray(0, 8)) === "ACTHHTCA" &&
@@ -185,7 +252,10 @@ export async function unpackBindingApp(encrypted, codec) {
   );
   const count = u32(data, 64),
     unit = u32(data, 68);
-  need(count === 15 && unit === 73728, "Unknown application chunks");
+  need(
+    count === meta.chunkCount && unit === meta.unit,
+    "Unknown application chunks",
+  );
   let pos = 72 + count * 4;
   const blocks = [],
     chunks = [];
@@ -197,7 +267,7 @@ export async function unpackBindingApp(encrypted, codec) {
       block[0] === 0x5d && u32(block, 1) <= 0x1000000,
       "Unexpected LZMA properties",
     );
-    const size = i === count - 1 ? 1095413 - unit * (count - 1) : unit;
+    const size = i === count - 1 ? meta.rawSize - unit * (count - 1) : unit;
     const alone = new Uint8Array(block.length + 8);
     alone.set(block.subarray(0, 5));
     dv(alone).setBigUint64(5, BigInt(size), true);
@@ -208,11 +278,11 @@ export async function unpackBindingApp(encrypted, codec) {
     chunks.push(decoded);
     pos += n;
   }
-  const raw = new Uint8Array(1095413);
+  const raw = new Uint8Array(meta.rawSize);
   chunks.forEach((c, i) => raw.set(c, i * unit));
   return { data, raw, blocks, chunks, unit };
 }
-async function packApp(app, raw, codec) {
+async function packApp(app, raw, codec, meta) {
   const blocks = [];
   for (let i = 0; i < app.blocks.length; i++) {
     const next = raw.subarray(
@@ -235,7 +305,10 @@ async function packApp(app, raw, codec) {
     72 + blocks.length * 4 + blocks.reduce((n, b) => n + b.length, 0),
     32,
   );
-  need(size <= 0xa9000, "Application exceeds the smaller factory system slot");
+  need(
+    size <= meta.appCapacity,
+    "Application exceeds the smaller factory system slot",
+  );
   const data = new Uint8Array(size);
   data.set(app.data.subarray(0, 72));
   let pos = 72 + blocks.length * 4;
@@ -295,19 +368,92 @@ function replaceApp(image, bytes) {
   put(result, 4, crc32(result.subarray(8, 1024)));
   return result;
 }
+export function validateKeyTable(table, meta) {
+  const stock = Uint8Array.from(meta.stockRows.flat()),
+    allowed = new Set(Object.values(meta.actions)),
+    keys = new Set(Object.values(meta.buttons));
+  need(table.length === stock.length, "Unknown key table length");
+  for (let i = 0; i < table.length; i += 6) {
+    const row = table.subarray(i, i + 6),
+      before = stock.subarray(i, i + 6);
+    if (
+      before[0] === 1 ||
+      row[0] === 1 ||
+      before[0] === 0x3a ||
+      row[0] === 0x3a
+    )
+      need(sameBytes(row, before), "Protected Power or common event changed");
+    if (
+      sameBytes(row, before) ||
+      !row[0] ||
+      meta.stockRows.some((r) => sameBytes(row, Uint8Array.from(r)))
+    )
+      continue;
+    const event = dv(row).getUint16(4, true);
+    need(
+      keys.has(row[1]) &&
+        allowed.has(row[0]) &&
+        Object.values(BINDING_EVENTS).includes(event),
+      "Unsupported custom key binding",
+    );
+    need(
+      !(row[1] === meta.buttons.power && event === BINDING_EVENTS.hold),
+      "Protected Power hold",
+    );
+    need(
+      [...meta.stockRows, ...meta.defaultRows].some(
+        (t) => t[0] === row[0] && t[2] === row[2] && t[3] === row[3],
+      ),
+      "Unknown action context",
+    );
+  }
+  need(
+    meta.stockRows.some(
+      (r, i) =>
+        r[0] === 1 &&
+        sameBytes(table.subarray(i * 6, i * 6 + 6), Uint8Array.from(r)),
+    ),
+    "Missing Power action",
+  );
+}
+export async function validateBindingApplication(encrypted, meta, codec) {
+  need(codec, "Application codec required");
+  const app = await unpackBindingApp(encrypted, codec, meta),
+    info = tableInfo(app.raw, meta),
+    canonical = app.raw.slice();
+  const start = meta.fsOffset + info.user.offset + info.patch.pos;
+  canonical.fill(0, start, start + info.patch.size);
+  canonical.fill(
+    0,
+    meta.fsOffset + info.user.record + 28,
+    meta.fsOffset + info.user.record + 32,
+  );
+  canonical.fill(0, meta.fsOffset + 24, meta.fsOffset + 32);
+  need(
+    (await sha256(canonical)) === meta.canonicalAppSha256,
+    "Application code or protected configuration changed",
+  );
+  validateKeyTable(info.merged, meta);
+  return { ...app, info };
+}
 export async function buildBindings(
   factory,
   changes,
   codec,
   audioBuild = null,
 ) {
-  const original = await openFactory(factory.image);
-  need(supportsBindings(original), "Bindings support X9 EN 1003 only");
+  const original = await openEditable(factory.image, { codec });
+  need(supportsBindings(original), "Unsupported binding profile");
+  const meta = bindingIdentity(original);
   const source = original.entries.find((e) => e.name === "app.bin"),
-    app = await unpackBindingApp(source.bytes, codec);
-  need((await sha256(app.raw)) === RAW_SHA, "Unknown application program");
-  const info = tableInfo(app.raw),
-    planned = planBindings(info.merged, changes, info.patch, info.defaults);
+    app = await validateBindingApplication(source.bytes, meta, codec);
+  const info = app.info,
+    planned = planBindings(info.merged, changes, info.patch, info.defaults, {
+      buttons: meta.buttons,
+      actions: meta.actions,
+      stock: Uint8Array.from(meta.stockRows.flat()),
+    });
+  validateKeyTable(planned, meta);
   const user = info.user.bytes.slice();
   user.set(
     planned.subarray(info.patch.offset, info.patch.offset + info.patch.size),
@@ -320,11 +466,11 @@ export async function buildBindings(
   const end = (info.resources.length + 1) * 32;
   put(fs, 24, sum32(fs.subarray(32, end)));
   put(fs, 28, sum32(fs.subarray(end)));
-  raw.set(fs, FS);
+  raw.set(fs, meta.fsOffset);
   // An empty edit must not recompress the factory application.
   const encrypted = sameBytes(raw, app.raw)
     ? source.bytes
-    : await packApp(app, raw, codec);
+    : await packApp(app, raw, codec, meta);
   const baseImage = audioBuild?.image || original.image,
     base = parseImage(baseImage);
   for (const e of original.entries)
@@ -351,15 +497,19 @@ export async function buildBindings(
         ),
         "Unrelated partition changed",
       );
-  const verified = await unpackBindingApp(
+  const verified = await validateBindingApplication(
     parsed.entries.find((e) => e.name === "app.bin").bytes,
+    meta,
     codec,
   );
   need(sameBytes(verified.raw, raw), "Application rebuild mismatch");
-  const after = tableInfo(verified.raw);
+  const after = verified.info;
   need(sameBytes(after.merged, planned), "Final key map mismatch");
   need(
-    sameBytes(app.raw.subarray(0, FS), verified.raw.subarray(0, FS)),
+    sameBytes(
+      app.raw.subarray(0, meta.fsOffset),
+      verified.raw.subarray(0, meta.fsOffset),
+    ),
     "Executable instructions changed",
   );
   for (const e of info.resources)
@@ -375,6 +525,8 @@ export async function buildBindings(
     model: original.profile.model,
     baseVersion: original.profile.version,
     baseSha256: original.profile.sha256,
+    inputSha256: original.digest,
+    inputWasCustom: original.isCustom,
     target: audioBuild?.report.target || "bindings",
     capacity: original.capacity,
     toneBytes: base.entries.find((e) => e.name === "tone.bin").size,
@@ -382,6 +534,7 @@ export async function buildBindings(
     imageBytes: image.length,
     bindings: changes.map((c) => ({ ...c })),
     powerBindingsPreserved: true,
+    powerClicksEditable: true,
     pairingAndTimingConfigurationPreserved: true,
     executableInstructionsUnchanged: true,
     programBootParametersUnchanged: sameBytes(raw, app.raw),

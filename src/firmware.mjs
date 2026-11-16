@@ -1,6 +1,7 @@
 // Original implementation reconstructed from verified X9 factory resources.
 // No executable firmware, manufacturer SDK code, or audio is bundled here.
 import { PROFILES } from "./profiles.mjs";
+import { IMAGE_IDENTITIES } from "./image-identities.mjs";
 export const PROFILE = Object.freeze({
   model: "MCHOSE X9",
   version: "1003 EN",
@@ -265,12 +266,17 @@ export function parseImage(image) {
   }
   return { entries, xml };
 }
-export async function scanFirmware(input) {
+export async function scanFirmware(input, options = {}) {
   const image = new Uint8Array(input).slice();
   need(image.length <= 16 * 1024 * 1024, "Файл слишком большой");
   const digest = await sha256(image);
-  if (PROFILES.some((p) => p.sha256 === digest && p.bytes === image.length)) {
-    const factory = await openFactory(image);
+  let factory, compatibilityError;
+  try {
+    factory = await openEditable(image, options);
+  } catch (error) {
+    compatibilityError = String(error.message || error);
+  }
+  if (factory) {
     const voices = factory.resources
       .filter((e) => /\.(act|aac|wav|pcm|mp3)$/i.test(e.name))
       .map((e) => ({
@@ -310,7 +316,137 @@ export async function scanFirmware(input) {
         return { ...e, kind: "unknown", replaceable: false };
       }
     });
-  return { image, digest, ...parsed, resources, voices, canBuild: false };
+  return {
+    image,
+    digest,
+    ...parsed,
+    resources,
+    voices,
+    canBuild: false,
+    compatibilityError,
+  };
+}
+export function canonicalHeader(image, entries) {
+  const header = image.slice(0, 1024);
+  header.fill(0, 4, 8);
+  header.fill(0, 20, 28);
+  for (const e of entries) {
+    header.fill(0, e.record + 16, e.record + 24);
+    header.fill(0, e.record + 28, e.record + 32);
+  }
+  return header;
+}
+export function canonicalXml(xml) {
+  return xml.replace(/<partition>[\s\S]*?<\/partition>/g, (block) => {
+    if (
+      !["app.bin", "tone.bin"].some((name) =>
+        block.includes("<file_name>" + name + "</file_name>"),
+      )
+    )
+      return block;
+    return block.replace(
+      /<(file_size|checksum)>[^<]+<\/\1>/g,
+      (_, name) => "<" + name + ">0</" + name + ">",
+    );
+  });
+}
+export async function openEditable(input, { codec } = {}) {
+  const image = new Uint8Array(input).slice();
+  need(image.length <= 16 * 1024 * 1024, "Firmware image too large");
+  const digest = await sha256(image);
+  const exact = PROFILES.find(
+    (p) => p.sha256 === digest && p.bytes === image.length,
+  );
+  if (exact) {
+    const f = await openFactory(image),
+      meta = IMAGE_IDENTITIES.find((p) => p.id === exact.id);
+    return {
+      ...f,
+      digest,
+      isCustom: false,
+      isCustomApplication: false,
+      bindingRows: meta?.stockRows,
+    };
+  }
+  const parsed = parseImage(image),
+    files = new Map(parsed.entries.map((e) => [e.name, e]));
+  need(
+    files.has("app.bin") && files.has("tone.bin") && files.has("param.bin"),
+    "Unknown editable firmware",
+  );
+  const hashes = new Map();
+  for (const e of parsed.entries) hashes.set(e.name, await sha256(e.bytes));
+  const headerSha = await sha256(canonicalHeader(image, parsed.entries)),
+    xmlSha = await sha256(encoder.encode(canonicalXml(parsed.xml)));
+  const candidates = IMAGE_IDENTITIES.filter(
+    (meta) =>
+      meta.headerSha256 === headerSha &&
+      meta.xmlSha256 === xmlSha &&
+      Object.entries(meta.protectedParts).every(
+        ([name, hash]) => hashes.get(name) === hash,
+      ),
+  );
+  need(
+    candidates.length === 1,
+    "Unknown program, bootloader or device parameters",
+  );
+  const meta = candidates[0],
+    profile = PROFILES.find((p) => p.id === meta.id);
+  need(
+    files.get("app.bin").size <= meta.appCapacity,
+    "Application exceeds system slot",
+  );
+  const tone = transform(files.get("tone.bin").bytes),
+    resources = parseSdfs(tone);
+  need(
+    tone.length <= profile.toneCapacity &&
+      resources.length === meta.toneEntries.length,
+    "Unknown tone partition layout",
+  );
+  for (const expected of meta.toneEntries) {
+    const actual = resources.find((e) => e.name === expected.name);
+    need(actual, "Unknown tone resource set");
+    if (expected.immutableSha256)
+      need(
+        (await sha256(actual.bytes)) === expected.immutableSha256,
+        "Protected tone resource changed",
+      );
+  }
+  const voices = resources.filter((e) => e.name.endsWith(".act"));
+  need(voices.length === 18, "Unknown voice set");
+  for (const voice of voices)
+    need(
+      unwrapAct(voice.bytes).frames.every(
+        (f) => f.profile === 2 && f.rate === 16000 && f.channels === 1,
+      ),
+      "Unsupported custom voice format",
+    );
+  const isCustomApplication = hashes.get("app.bin") !== meta.appSha256;
+  let bindingRows = meta.stockRows;
+  if (isCustomApplication) {
+    const { validateBindingApplication } = await import("./bindings.mjs");
+    const validated = await validateBindingApplication(
+      files.get("app.bin").bytes,
+      meta,
+      codec,
+    );
+    bindingRows = Array.from({ length: 40 }, (_, i) =>
+      Array.from(validated.info.merged.slice(i * 6, i * 6 + 6)),
+    );
+  }
+  return {
+    image,
+    digest,
+    isCustom: true,
+    isCustomApplication,
+    profile,
+    tone,
+    resources,
+    voices,
+    capacity: profile.toneCapacity,
+    bindingRows,
+    ...parsed,
+  };
 }
 export async function openFactory(input) {
   const image = new Uint8Array(input).slice();
@@ -353,9 +489,14 @@ export async function openFactory(input) {
   }
   return { image, tone, resources, voices, capacity, profile, ...parsed };
 }
-export async function buildFirmware(factory, target, replacement) {
+export async function buildFirmware(
+  factory,
+  target,
+  replacement,
+  options = {},
+) {
   // Reopen the pinned base instead of trusting caller-mutated metadata.
-  const original = await openFactory(factory.image);
+  const original = await openEditable(factory.image, options);
   need(
     original.voices.some((e) => e.name === target),
     "Неизвестное уведомление",
@@ -468,6 +609,8 @@ export async function buildFirmware(factory, target, replacement) {
       model: original.profile.model,
       baseVersion: original.profile.version,
       baseSha256: original.profile.sha256,
+      inputSha256: original.digest,
+      inputWasCustom: original.isCustom,
       outputSha256: await sha256(image),
       imageBytes: image.length,
       target,

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0
+
+- Added individual key profiles for all nine browser-editable AAC/ACT images across five models, including G9 Pro's different key codes and V9 Pro's combined Power/Mode control.
+- Added compatible custom-image recognition using immutable boot/parameter/header fingerprints and normalized application verification. Existing custom sounds and bindings are retained across further edits.
+- Allowed Power click reassignment while retaining the exact stock power-on/off record and protected hold, pairing configuration, timings and executable instructions.
+- Separated Keep loaded, Factory restore and Discard edit; factory restoration affects one gesture and never replaces audio.
+- Added per-profile roundtrip, repeated-custom-edit and integrity-valid negative tests for altered code, parameters and Power bindings. Other-platform offline audio models remain outside this key writer.
+
 ## 1.3.0 — 2026-11-16
 
 - Replaced the long binding table with button / gesture selectors and an action list alongside the factory assignment, plus a restorable edit summary.

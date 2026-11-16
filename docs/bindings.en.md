@@ -1,8 +1,8 @@
-# X9 key table and experimental rebuilding
+# MCHOSE button profiles and compatible custom images
 
 [Русский](bindings.ru.md) · [简体中文](bindings.zh.md)
 
-Button editing supports **the exact original X9 EN 1003 image only**, checked by full SHA256. It is software-validated, not hardware-tested. Other models and firmware versions are not assumed compatible.
+Button editing supports nine known AAC/ACT images across X9, G9 Pro, V9 Pro, V9 Turbo and V9 Turbo+, including compatible custom variants. [Versions, buttons and limits](binding-compatibility.md). Each has a separate layout/key policy. New bindings remain software-validated, not hardware-tested. The X9 investigation below is a case study; its offsets must not be reused for other models.
 
 ## Evidence
 
@@ -14,13 +14,13 @@ Each six-byte entry contains an action ID, internal key code, two additional byt
 
 ## Editor and protection
 
-Choose a button, then a gesture, then an action from the list on the right. The original assignment is shown alongside it; your edits are listed separately with per-gesture restore. G and Mic support single through five clicks and the existing hold. Power is visible but locked.
+Choose a button, gesture and action on the right. Both the factory and loaded assignments are shown. The physical button set is model-specific. Power clicks can be reassigned; the factory power-on/off hold remains protected. New edits are listed separately.
 
-There are 16 choices: play/pause, previous/next track, media volume up/down, call volume up/down, answer/reject/end call, request/stop voice assistant, lighting toggle, connection switching, sound mode switching and microphone toggle. Disabled X9 actions use complete factory templates from `defcfg`, including additional fields; this does not reactivate their old gestures. Common `0x3A` hooks and factory timing settings remain unchanged.
+Profiles offer 15–16 choices: play/pause, tracks, media/call volume, call control, assistant requests and headset functions. Only intact factory templates available for that model are used; V9 Pro does not get an invented RGB template. Common `0x3A` hooks and factory timing settings remain unchanged.
 
-Load X9 EN 1003, choose assignments and build. Audio is optional; a prepared sound can be included in the same image. The factory option leaves a gesture untouched. Download the image and its JSON report; install separately with the official updater.
+Load a supported original or compatible custom image and build. Existing custom sounds are preserved byte-for-byte; audio input is optional. Keep loaded retains a current binding; Factory restores only that gesture, including context-specific factory actions; Discard edit removes only the pending change. A newly prepared sound can be included. The JSON report records the factory and actual input hashes. Install separately using the official updater.
 
-Power is never editable. Its factory entries must remain byte-identical and a factory power action must exist. Only complete six-byte entries within the existing user ID 12 patch can change. Pairing combinations in ID 13, timing settings, executable instructions, bootloader, partition map and other resources remain unchanged. The smaller original system-slot capacity is enforced.
+Power clicks are editable. The exact factory power-on/off record and hold are protected, and a missing or altered power function is rejected in both input and output. Only complete six-byte entries within the existing user ID 12 patch can change. Pairing combinations in ID 13, timing settings, executable instructions, bootloader, partition map and other resources remain unchanged. The model's smaller original system-slot capacity is enforced.
 
 The builder repairs SDFS sums, the compressed application header, XML and AOTA CRCs, then decompresses the final application and verifies the intended table and unchanged instructions/resources. Checks run in the builder, not just the UI. They prevent removing power through this editor; they do not guarantee recovery from hardware failure, interrupted flashing or an as-yet untested compressed-stream variant. The website never flashes a device.
 

@@ -2,7 +2,7 @@
 
 [Русский](rebuild.ru.md) · English · [简体中文](rebuild.zh.md)
 
-1. Choose the exact headset model and language in the catalog, then load the base. Alternatively, select an original local `.bin`. The SHA256 must match an explicitly supported image. Do not select a receiver image or a previously modified build.
+1. Choose the exact headset model/language or load a local `.bin`, including a compatible existing custom image. Originals are SHA256-pinned; custom variants must retain compatible instructions, bootloader, parameters and permitted sound/key changes. Receiver images and unknown program patches are rejected.
 2. Inspect the actual resource list and preview an original. Friendly event labels are hints, not authoritative paths. Unknown audio formats remain visible but cannot be replaced by the AAC writer.
 3. Choose your audio, set its start and end, then prepare it. The site creates mono 16 kHz PCM with short fades and a peak cap, encodes AAC-LC at 24 kbit/s, wraps it as ACT, unwraps and decodes it for the preview.
 4. Listen to that final preview. Build and download the image and validation report. Program, DSP, bootloader, parameters and other sounds are preserved. The flash partition map and firmware version are not changed.

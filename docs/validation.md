@@ -1,5 +1,13 @@
 # Validation record
 
+## Profile-aware custom-image editing 1.4.0
+
+All nine browser AAC/ACT originals have individual fingerprints and key policies. The music-registration sequence and normalized media-dispatch grouping were compared; key roles and user-patch lengths are extracted per image. G9 Pro uses different G/Mic codes; V9 Pro shares playback/Mode with Power and does not get a nonexistent separate G or RGB template.
+
+Private integration tests exercised each profile through custom audio, Power-click/track binding edits, custom-image reopening, byte-identical empty key edits, further audio edits retaining bindings, and restoring only Power's click while retaining the other edits and sounds. Independent integrity-valid negative fixtures changed program code, parameters and the critical Power-hold record while repairing all outer checksums; compatible-image validation rejected each one.
+
+The local browser loaded the existing hardware-tested Miku X9 image (source SHA256 `e92501a68b7c7ca8b3d3434c454b7f8615068ee33d3b15017c41d4b7221478fb`), changed Power single-click from RGB to connection switching and downloaded a 746,496-byte image, SHA256 `5f916a090f53ef162acc76fd0cc7e04a96dfd16bfd6217a5b512e3c48e8b90b2`. Independent Python verification found only app/XML changes relative to that custom input, with the sound partition byte-identical and Power control/pairing/instructions intact. The resulting custom application reopened successfully in the browser. V9 Pro's UI showed Power/Mic only. These new binding images were not flashed. Historical 1.2/1.3 records below describe the older all-Power-click lock; 1.4 protects the critical power hold while allowing click edits.
+
 ## Native-command editor 1.3.0 — 2026-11-16
 
 The three-step editor exposes 16 whitelisted actions, with factory-template fallback for disabled X9 commands. The static audit records 56 unique IDs across six direct registrations; 40 lack factory CFG12/13 assignments. Registration is not hardware support or proof of a meaningful handler in every state.

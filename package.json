@@ -1,6 +1,6 @@
 {
   "name": "mchose-voice-lab",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "private": true,
   "description": "MCHOSE firmware research and a browser-local voice prompt editor",
   "license": "MIT",

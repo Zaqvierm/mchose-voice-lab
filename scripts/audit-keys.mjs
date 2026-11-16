@@ -12,7 +12,7 @@ const path = process.argv[2];
 if (!path)
   throw new Error("Usage: node scripts/audit-keys.mjs ORIGINAL-X9-1003.bin");
 const factory = await openFactory(new Uint8Array(await readFile(path)));
-if (!supportsBindings(factory))
+if (factory.profile.id !== "x9-1003")
   throw new Error("Audit supports the exact X9 EN 1003 original only");
 const codec = {
   decompress: (data) =>
@@ -52,13 +52,11 @@ for (const [mode, start, count] of registrations)
         hex: "0x" + id.toString(16).toUpperCase().padStart(2, "0"),
         registrations: [],
       });
-    commands
-      .get(id)
-      .registrations.push({
-        mode,
-        flags,
-        table: "0x" + (0x10000000 + start).toString(16),
-      });
+    commands.get(id).registrations.push({
+      mode,
+      flags,
+      table: "0x" + (0x10000000 + start).toString(16),
+    });
   }
 const resources = parseSdfs(raw.slice(0xbb774, 0xbb774 + 327552));
 const defaults = configRecords(

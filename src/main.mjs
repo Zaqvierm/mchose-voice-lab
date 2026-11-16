@@ -14,6 +14,9 @@ import {
   buildBindings,
   BINDING_EVENTS,
   BINDING_ACTIONS,
+  bindingButtons,
+  bindingActions,
+  gestureActions,
 } from "./bindings.mjs";
 import { createBindingCodec } from "./lzma-browser.mjs";
 const $ = (id) => document.getElementById(id);
@@ -87,7 +90,9 @@ function controls() {
     .forEach((e) => (e.disabled = state.busy));
   if ($("binding-action"))
     $("binding-action").disabled =
-      state.busy || state.bindingSelection.button === "power";
+      state.busy ||
+      (state.bindingSelection.button === "power" &&
+        state.bindingSelection.event === "hold");
   $("download").disabled = state.busy || !state.built;
 }
 function coreErrorKey(error) {
@@ -345,18 +350,18 @@ function renderBindings() {
     n.textContent = value;
     return n;
   };
+  const availableButtons = bindingButtons(state.factory),
+    availableActions = bindingActions(state.factory);
+  if (!Object.hasOwn(availableButtons, state.bindingSelection.button))
+    state.bindingSelection.button = Object.hasOwn(availableButtons, "g")
+      ? "g"
+      : "power";
   const { button, event } = state.bindingSelection;
   const buttonLabel = (b) =>
     t({ g: "bindingG", mic: "bindingMic", power: "bindingPower" }[b]);
   const gestureLabel = (b, e) =>
     t("gesture_" + e) +
-    (e === "hold"
-      ? b === "g"
-        ? " · ~2 s"
-        : b === "mic"
-          ? " · ~1.5 s"
-          : " · ~3 s"
-      : "");
+    (e === "hold" ? " · " + t("bindingsFactoryTiming") : "");
   const select = (id, label) => {
     const wrap = node("label", label),
       s = document.createElement("select");
@@ -375,7 +380,8 @@ function renderBindings() {
   const left = node("div", "");
   left.className = "binding-steps";
   const keys = select("binding-button", t("bindingsStepButton"));
-  for (const b of ["g", "mic", "power"]) option(keys.s, b, buttonLabel(b));
+  for (const b of Object.keys(availableButtons))
+    option(keys.s, b, buttonLabel(b));
   keys.s.value = button;
   keys.s.onchange = () => {
     state.bindingSelection.button = keys.s.value;
@@ -394,25 +400,21 @@ function renderBindings() {
   left.append(keys.wrap, events.wrap, node("p", t("bindingsSelectionHint")));
   const right = node("div", "");
   right.className = "binding-actions";
-  const factory =
-    {
-      g: { single: "play", double: "connection", hold: "soundMode" },
-      mic: { single: "microphone", double: "calls", hold: "reject" },
-      power: { single: "rgb", hold: "power", five: "service" },
-    }[button][event] || "none";
-  const factoryNote = node(
-    "p",
-    t("bindingFactory") + " — " + t("bindAction_" + factory),
-  );
+  const labelActions = (values) =>
+    values.length
+      ? [...new Set(values)].map((a) => t("bindAction_" + a)).join(" · ")
+      : t("bindAction_none");
+  const factory = labelActions(
+      gestureActions(state.factory, button, event, true),
+    ),
+    loaded = labelActions(gestureActions(state.factory, button, event));
+  const factoryNote = node("p", t("bindingFactory") + " — " + factory);
   factoryNote.id = "binding-factory";
   const actions = select("binding-action", t("bindingsStepAction"));
   actions.s.size = 10;
-  option(
-    actions.s,
-    "",
-    t("bindingFactory") + " — " + t("bindAction_" + factory),
-  );
-  for (const action of Object.keys(BINDING_ACTIONS))
+  option(actions.s, "", t("bindingsKeepLoaded") + " — " + loaded);
+  option(actions.s, "factory", t("bindingFactory") + " — " + factory);
+  for (const action of Object.keys(availableActions))
     option(actions.s, action, t("bindAction_" + action));
   actions.s.value =
     state.bindingEdits.find((e) => e.button === button && e.event === event)
@@ -435,7 +437,7 @@ function renderBindings() {
           : "bindingsScopeLocal";
   const note = node(
     "p",
-    button === "power"
+    button === "power" && event === "hold"
       ? t("bindingPowerLocked")
       : chosen
         ? t(scope)
@@ -443,9 +445,9 @@ function renderBindings() {
   );
   note.className = "fine";
   note.id = "binding-action-info";
-  actions.s.disabled = state.busy || button === "power";
+  actions.s.disabled = state.busy || (button === "power" && event === "hold");
   actions.s.onchange = () => {
-    if (state.busy || button === "power") return;
+    if (state.busy || (button === "power" && event === "hold")) return;
     const value = actions.s.value;
     state.bindingEdits = state.bindingEdits.filter(
       (e) => !(e.button === button && e.event === event),
@@ -474,7 +476,9 @@ function renderBindings() {
           " · " +
           gestureLabel(edit.button, edit.event) +
           " → " +
-          t("bindAction_" + edit.action),
+          (edit.action === "factory"
+            ? t("bindingFactory")
+            : t("bindAction_" + edit.action)),
       ),
     );
     const remove = node("button", t("bindingsRestore"));
@@ -555,7 +559,13 @@ async function readBaseBytes(bytes, name) {
   resetBuild();
   resetOriginal();
   message("loadingBase", "busy");
-  const f = await scanFirmware(bytes);
+  const codec = createBindingCodec();
+  let f;
+  try {
+    f = await scanFirmware(bytes, { codec });
+  } finally {
+    codec.close();
+  }
   state.factory = f;
   state.baseFile = name;
   renderBindings();
@@ -564,7 +574,13 @@ async function readBaseBytes(bytes, name) {
   if (f.voices.some((e) => e.name === "V_POWON.act"))
     $("voice").value = "V_POWON.act";
   message(
-    f.canBuild ? "baseReady" : f.voices.length ? "baseUnsupported" : "noSounds",
+    f.canBuild
+      ? f.isCustom
+        ? "customBaseReady"
+        : "baseReady"
+      : f.voices.length
+        ? "baseUnsupported"
+        : "noSounds",
   );
 }
 async function readBase(file) {
@@ -824,21 +840,26 @@ $("build").onclick = () =>
     const editSound = state.prepared && selectedVoice()?.replaceable;
     if (!editKeys && !editSound) fail("needInputs");
     message("building", "busy");
-    state.built = editSound
-      ? await buildFirmware(state.factory, $("voice").value, state.prepared.act)
-      : null;
-    if (editKeys) {
-      const codec = createBindingCodec();
-      try {
+    const codec = createBindingCodec();
+    try {
+      state.built = editSound
+        ? await buildFirmware(
+            state.factory,
+            $("voice").value,
+            state.prepared.act,
+            { codec },
+          )
+        : null;
+      if (editKeys) {
         state.built = await buildBindings(
           state.factory,
           state.bindingEdits,
           codec,
           state.built,
         );
-      } finally {
-        codec.close();
       }
+    } finally {
+      codec.close();
     }
     $("result").hidden = false;
     renderResult();
@@ -878,6 +899,7 @@ function changedCatalog(keepVariant = false) {
     renderBase();
     renderVoices();
   }
+  message("ready");
   controls();
 }
 $("model-select").onchange = () => changedCatalog(false);

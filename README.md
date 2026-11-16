@@ -11,8 +11,9 @@ MCHOSE voice prompt editing and firmware audio research: AAC/ACT in the browser,
 - Load a pinned original from the catalog or select a local image.
 - Inspect actual sound resources and preview the selected factory recording.
 - Trim audio, encode AAC-LC, package ACT and download a rebuilt image.
-- Create experimental custom button bindings on X9 EN 1003: G / Mic, single through five clicks and existing holds. Power is locked in the builder.
-- Three-step button editor with 16 native actions, including track skipping, call controls and voice-assistant requests. [56-ID registration audit](docs/key-command-inventory.md); unverified/service IDs remain restricted.
+- Edit button bindings on all nine browser-editable profiles: X9, G9 Pro, V9 Pro, V9 Turbo and V9 Turbo+. Buttons and 15–16 action templates are model-specific. Power clicks are editable; power-on/off and its hold remain protected.
+- Load compatible custom firmware and retain its existing sounds/bindings. `Keep loaded` and `Factory` are separate choices. [Compatibility and verification](docs/binding-compatibility.md).
+- Three-step button editor with track skipping, call controls and voice-assistant requests. [X9 56-ID registration audit](docs/key-command-inventory.md); unverified/service IDs remain restricted.
 - Audio-only builds preserve the application payload; binding builds change only its key configuration, preserving executable instructions, bootloader, partition parameters and other resources.
 
 See [button-table research and instructions](docs/bindings.en.md). Custom bindings have software validation only; function labels are correlated with the official manual. Hold timing and pairing combinations are not editable.

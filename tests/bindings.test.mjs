@@ -50,7 +50,7 @@ test("binding planner preserves Power and rejects unavailable/duplicate gestures
     ),
   );
   for (const change of [
-    { button: "power", event: "single", action: "play" },
+    { button: "power", event: "hold", action: "play" },
     { button: "g", event: "single", action: "power" },
     { button: "mic", event: "seven", action: "play" },
     { button: "toString", event: "single", action: "play" },
@@ -66,6 +66,20 @@ test("binding planner preserves Power and rejects unavailable/duplicate gestures
   const noPower = t.slice();
   noPower[0] = 0;
   assert.throws(() => planBindings(noPower, []), /Power/);
+  const powerClick = planBindings(t, [
+    { button: "power", event: "single", action: "connection" },
+  ]);
+  assert.deepEqual(powerClick.slice(0, 6), t.slice(0, 6));
+  assert(
+    powerClick.some(
+      (v, i) =>
+        i % 6 === 0 &&
+        v === 0x38 &&
+        powerClick[i + 1] === 11 &&
+        powerClick[i + 4] === 0 &&
+        powerClick[i + 5] === 4,
+    ),
+  );
 });
 
 test("hidden actions use the immutable defaults without restoring old gestures", () => {
@@ -97,19 +111,30 @@ test("hidden actions use the immutable defaults without restoring old gestures",
 });
 test("CFG parser rejects malformed directory and size", () => {
   assert.throws(() => configRecords(new Uint8Array(16)));
-  assert.equal(supportsBindings({ profile: { id: "v9pro-1015" } }), false);
+  assert.equal(supportsBindings({ profile: { id: "g9v2-0031" } }), false);
+  assert.equal(supportsBindings({ profile: { id: "v9pro-1015" } }), true);
 });
 
-test('published command registry and all three action dictionaries agree with the builder',async()=>{
-  const registry=JSON.parse(await readFile(new URL('../public/key-commands.json',import.meta.url),'utf8'));
-  assert.equal(registry.commands.length,56);assert.equal(new Set(registry.commands.map(c=>c.id)).size,56);
-  assert.equal(registry.commands.filter(c=>!c.factoryAssigned).length,40);
-  const choices=registry.commands.filter(c=>c.editorAction);
-  assert.equal(choices.length,16);
-  for(const c of choices)assert.equal(BINDING_ACTIONS[c.editorAction],c.id);
-  assert.equal(registry.commands.find(c=>c.id===1).status,'protected');
-  const {setLanguage,t}=await import('../src/i18n.mjs');
-  for(const language of ['ru','en','zh']){setLanguage(language);for(const action of Object.keys(BINDING_ACTIONS))assert.notEqual(t('bindAction_'+action),'bindAction_'+action)}
+test("published command registry and all three action dictionaries agree with the builder", async () => {
+  const registry = JSON.parse(
+    await readFile(
+      new URL("../public/key-commands.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  assert.equal(registry.commands.length, 56);
+  assert.equal(new Set(registry.commands.map((c) => c.id)).size, 56);
+  assert.equal(registry.commands.filter((c) => !c.factoryAssigned).length, 40);
+  const choices = registry.commands.filter((c) => c.editorAction);
+  assert.equal(choices.length, 16);
+  for (const c of choices) assert.equal(BINDING_ACTIONS[c.editorAction], c.id);
+  assert.equal(registry.commands.find((c) => c.id === 1).status, "protected");
+  const { setLanguage, t } = await import("../src/i18n.mjs");
+  for (const language of ["ru", "en", "zh"]) {
+    setLanguage(language);
+    for (const action of Object.keys(BINDING_ACTIONS))
+      assert.notEqual(t("bindAction_" + action), "bindAction_" + action);
+  }
 });
 test("browser worker speaks the documented postMessage protocol", async () => {
   const script = await readFile(

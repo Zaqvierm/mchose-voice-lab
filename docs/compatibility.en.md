@@ -4,6 +4,8 @@
 
 The catalog contains 13 original images across 8 wireless models. The browser edits 9 AAC/ACT images across five models. A separate experimental CLI rebuilds 4 images across three models.
 
+All nine browser profiles now support button editing and compatible custom-image re-editing. Power clicks are editable; its power-on/off hold is protected. [Versions, physical buttons and platform limits](binding-compatibility.md). The experimental offline profiles below support audio, not button rewriting.
+
 | Headset | Original versions | Browser rebuilding | Offline tooling |
 |---|---|---|---|
 | MCHOSE G9 Pro | 0026 | Yes | Node CLI |

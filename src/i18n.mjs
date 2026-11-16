@@ -666,3 +666,67 @@ Object.assign(messages.zh, {
   bindAction_power: "开机 / 关机 🔒",
   bindAction_service: "受保护的出厂操作",
 });
+
+Object.assign(messages.ru, {
+  baseHint:
+    "Оригинальная или совместимая кастомная прошивка. Код, загрузчик и параметры устройства должны оставаться совместимыми.",
+  customBaseReady:
+    "Кастомная прошивка проверена. Существующие звуки и бинды сохранены; можно вносить новые изменения.",
+  bindingsUnavailable:
+    "Загрузите совместимую прошивку AAC/ACT: X9, G9 Pro, V9 Pro, V9 Turbo или V9 Turbo+. Форматы других моделей пока требуют отдельного разбора кнопок.",
+  bindingsScope:
+    "Выберите кнопку, жест и действие. Кнопки, функции и заводские назначения определяются профилем модели. Можно изменить бинды готовой кастомной сборки, сохранив её звуки. Аппаратная проверка новых назначений ещё требуется.",
+  bindingPower: "Power",
+  bindingPowerLocked:
+    "Штатное удержание включения/выключения защищено. Клики Power можно переназначать.",
+  bindingsPowerNotice:
+    "Защищены включение/выключение, комбинация сопряжения и таймеры. Клики Power доступны для изменения. Проверки выполняются и для загруженной, и для собранной прошивки.",
+  bindingsKeepLoaded: "Оставить загруженное",
+  bindingsFactoryTiming: "заводская длительность",
+  bindingsRestore: "Отменить изменение",
+  bindingsNoEdits:
+    "Новых изменений нет. Сохраняются назначения загруженной прошивки.",
+  bindingsFactoryHint:
+    "«Оставить загруженное» сохраняет текущий бинд. «Заводское» восстанавливает исходное назначение только этого жеста, не затрагивая звуки.",
+});
+Object.assign(messages.en, {
+  baseHint:
+    "Original or compatible custom firmware. Executable code, bootloader and device parameters must remain compatible.",
+  customBaseReady:
+    "Custom firmware verified. Existing sounds and bindings are retained; further edits are available.",
+  bindingsUnavailable:
+    "Load compatible AAC/ACT firmware: X9, G9 Pro, V9 Pro, V9 Turbo or V9 Turbo+. Other model formats require separate button analysis.",
+  bindingsScope:
+    "Choose a button, gesture and action. Buttons, available functions and factory assignments are model-specific. Edit an existing custom image while retaining its sounds. New assignments still require hardware testing.",
+  bindingPower: "Power",
+  bindingPowerLocked:
+    "The factory power-on/off hold is protected. Power clicks can be reassigned.",
+  bindingsPowerNotice:
+    "Power on/off, pairing and timing configuration are protected. Power clicks are editable. Both loaded and rebuilt images are verified.",
+  bindingsKeepLoaded: "Keep loaded",
+  bindingsFactoryTiming: "factory duration",
+  bindingsRestore: "Discard edit",
+  bindingsNoEdits:
+    "No new edits. The loaded firmware assignments are retained.",
+  bindingsFactoryHint:
+    "Keep loaded retains the current binding. Factory restores only this gesture to its original assignment without replacing sounds.",
+});
+Object.assign(messages.zh, {
+  baseHint:
+    "原始或兼容的自定义固件。可执行代码、引导程序及设备参数必须保持兼容。",
+  customBaseReady: "自定义固件校验通过。已保留现有提示音和按键，可继续修改。",
+  bindingsUnavailable:
+    "请加载兼容的 AAC/ACT 固件：X9、G9 Pro、V9 Pro、V9 Turbo 或 V9 Turbo+。其他格式仍需单独分析按键。",
+  bindingsScope:
+    "选择按键、操作及功能。可用按键、功能和原始映射根据型号确定。可编辑现有自定义固件并保留其提示音。新映射仍需实机测试。",
+  bindingPower: "电源",
+  bindingPowerLocked: "开关机长按受保护，电源键的点击操作可以重新分配。",
+  bindingsPowerNotice:
+    "保护开关机、配对及计时设置。电源键点击可修改。加载和构建的固件均会校验。",
+  bindingsKeepLoaded: "保留已加载配置",
+  bindingsFactoryTiming: "出厂时长",
+  bindingsRestore: "取消本次修改",
+  bindingsNoEdits: "没有新修改，保留所加载固件的映射。",
+  bindingsFactoryHint:
+    "保留已加载配置会保留当前映射；出厂设置仅恢复此操作，不替换提示音。",
+});
