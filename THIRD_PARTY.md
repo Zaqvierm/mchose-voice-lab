@@ -15,7 +15,7 @@ The FFmpeg core is retrieved from the pinned npm package. Its upstream source, c
 
 The website build retrieves unchanged official MCHOSE headset images from the URLs in `public/catalog.json`. Each is checked against an explicitly recorded SHA256 and size before publication. They are vendor assets, not open-source contributions of this project. Rights remain with their respective owners. Official source links remain available alongside the catalog. No manufacturer SDK executables or source modules are bundled.
 
-Owner audio (including the test sound used during research), original voice recordings and private fixture images are not committed to Git. Visitors are responsible for the audio they provide.
+The private reference voice recording, other original recordings used during research, and private fixture images are not committed to Git. The eighteen generated Russian V9 Pro prompt MP3s under `assets/v9pro-ru/` were contributed by the project owner for community testing and use with the compatible headset image; they are separate from the MIT license covering source code. Visitors remain responsible for audio they provide.
 
 When the manufacturer's CDN is unavailable, the build may reuse a cached or previously published original from this project's website. The exact same SHA256 and size are required; no alternative version is silently substituted. An initial publication still requires at least one valid original source. Cache/mirror transport does not change vendor ownership.
 
@@ -30,3 +30,4 @@ MCHOSE, Actions Technology, OpenAI Codex and other names identify relevant produ
 - [xqy2006/jsc2js](https://github.com/xqy2006/jsc2js) was a static research tool. It is not bundled or needed at runtime.
 
 The offline CLI requires a user-provided native FFmpeg installation; its license and build configuration remain the user's installed distribution's responsibility. No vendor firmware, factory voice audio, downloaded codec executables or app disassembly is committed.
+
