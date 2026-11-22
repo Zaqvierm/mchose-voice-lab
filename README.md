@@ -22,11 +22,13 @@ Processing stays in the browser. The editor does not upload user files or flash 
 
 ## Validation scope
 
-The catalog contains 13 official images for 8 wireless models. Nine AAC/ACT images across five models support editing; four other images are original-download-only. Each editable image passes a byte-identical no-op rebuild. All 162 ACT resources pass AAC structural and exact wrapper-roundtrip checks. **Hardware validation covers X9 English 1003 Power On only.** Other profiles are software-validated.
+The catalog contains 13 official images for 8 wireless models. Nine AAC/ACT images across five models support editing; four other images are original-download-only. Each editable image passes a byte-identical no-op rebuild. All 162 ACT resources pass AAC structural and exact wrapper-roundtrip checks. X9 English 1003 Power On replacement has hardware playback confirmation. For V9 Pro 1015, the project owner reported successful installation of an experimental Russian build through the official updater; playback of every prompt has not been independently confirmed. Other profiles are software-validated.
 
 Unknown images are inspection-only. Source files are limited to 25 MB / 10 minutes; encoded output must fit the original sound partition.
 
 [Instructions](docs/rebuild.en.md) · [Research](docs/research.en.md) · [Catalog](docs/firmware-catalog.md) · [Validation](docs/validation.md) · [Risk notice](DISCLAIMER.md)
+
+Experimental [Russian prompt pack for V9 Pro 1015](docs/v9pro-russian-prompts.en.md), with 18 [ready-to-use MP3 prompts](assets/v9pro-ru/) and a source build script.
 
 ## Frequently asked questions
 
@@ -92,3 +94,4 @@ Maintained by Zaqvierm, with AI-assisted development using OpenAI Codex. [Contri
 [V9 Pro 2 / R9 / G9 V2: CLI](docs/offline.en.md) · [Models](docs/compatibility.en.md) · [Research](docs/wireless.en.md)
 
 The browser offers originals and links to the separate offline workflow. The Python CLI validates the exact original, encodes user audio and rebuilds an experimental image with a preview and report. These modified-image profiles have no project hardware validation.
+

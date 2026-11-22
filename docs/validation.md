@@ -28,6 +28,12 @@ The local browser built and downloaded an image assigning G triple-click to conn
 
 The project owner recognized the decoded factory X9 Power On voice and confirmed a custom Power On sound after installing image SHA256 `e92501a68b7c7ca8b3d3434c454b7f8615068ee33d3b15017c41d4b7221478fb`. The assistant did not perform flashing. Full regression of every notification, microphone, device mode or other headset model was not reported.
 
+## MCHOSE V9 Pro 1015 Russian prompt experiment
+
+The project owner reported successful installation through the official updater of a custom V9 Pro 1015 headset image with eighteen Russian prompt resources. The final image changed `tone.bin` plus corresponding checksum metadata; application, bootloader, and parameter partitions were byte-identical to the exact factory base. The modified `V_BTCNT2` resource contains the phrase “Устройство подключено.” The corrected image SHA-256 is `1232467c2843f393570b82264bf8d5f82f66328ab5667a9cdf481ff423fb6d4b`.
+
+Updater acceptance confirms installation of that image. The user has not reported an acoustic check of every prompt after the corrected flash, so this record does not claim complete listening validation. Evidence is limited to the standard V9 Pro 1015 headset; it does not cover the receiver, V9 Turbo, X9, or other models. The release recipe is [here](v9pro-russian-prompts.en.md).
+
 ## Local private fixtures
 
 - 36 X9 ACTs / 648 frames: complete ADTS parsing, FFmpeg decode without errors and byte-identical wrapper roundtrip.
@@ -50,3 +56,4 @@ No browser WebHID flasher is implemented or tested by this project.
 The revised interface was exercised in Russian, English and Simplified Chinese without losing the loaded audio, selection or prepared result. Catalog selection loaded a pinned factory image directly from same-origin published assets. G9 Pro exposed its actual `V_BATTLO.act` and did not inherit the X9 `V_MAXVOL.act` entry. Its factory sound could be decoded for audition.
 
 A second browser-generated fixture replaced G9 Pro 0026 `V_BATTLO.act`, not Power On. The downloaded image passed independent Python AOTA/SDFS validation: protected payloads and the other 19 resources matched the original; extracted AAC decoded without errors. No G9 Pro was flashed. Narrow/mobile and desktop breakpoints were checked for horizontal overflow; temporary viewport overrides were cleared.
+
